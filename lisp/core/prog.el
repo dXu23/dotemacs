@@ -1,0 +1,43 @@
+(customize-set-variable 'lsp-auto-guess-root t)
+(customize-set-variable 'lsp-log-io nil)
+(customize-set-variable 'lsp-restart 'auto-restart)
+(customize-set-variable 'lsp-enable-symbol-highlighting nil)
+(customize-set-variable 'lsp-enable-on-type-formatting nil)
+(customize-set-variable 'lsp-signature-auto-activate nil)
+(customize-set-variable 'lsp-signature-render-documentation nil)
+(customize-set-variable 'lsp-eldoc-hook nil)
+(customize-set-variable 'lsp-modeline-code-actions-enable nil)
+(customize-set-variable 'lsp-semantic-tokens-enable nil)
+(customize-set-variable 'lsp-enable-folding nil)
+(customize-set-variable 'lsp-enable-imenu nil)
+(customize-set-variable 'lsp-enable-snippet nil)
+(customize-set-variable 'lsp-idle-delay nil)
+
+(customize-set-variable 'major-mode-remap-alist
+			'((yaml-mode . yaml-ts-mode)
+			  (bash-mode . bash-ts-mode)
+			  (js-mode . js-ts-mode)
+			  (typescript-mode . typescript-ts-mode)
+			  (json-mode . json-ts-mode)
+			  (css-mode . css-ts-mode)
+			  (python-mode . python-ts-mode)))
+
+
+(customize-set-variable 'lsp-ui-doc-enable nil)
+(customize-set-variable 'lsp-ui-doc-header t)
+(customize-set-variable 'lsp-ui-doc-include-signature t)
+(customize-set-variable 'lsp-ui-doc-border (face-foreground 'default))
+(customize-set-variable 'lsp-ui-sidline-show-code-actions t)
+(customize-set-variable 'lsp-ui-sidline-delay 0.05)
+
+(defun my/remove-treesit-sexp-changes ()
+  (when (eq forward-sexp-function #'treesit-forward-sexp)
+    (setq forward-sexp-function nil))
+  (when (eq transpose-sexps-function #'treesit-transpose-sexps)
+    (setq transpose-sexps-function nil))
+  (when (eq forward-sentence-function #'treesit-forward-sentence)
+    (setq forward-sentence-function nil)))
+
+(add-hook 'prog-mode-hook #'my/remove-treesit-sexp-changes)
+
+(provide 'core/prog)

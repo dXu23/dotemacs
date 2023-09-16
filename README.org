@@ -1,0 +1,214 @@
+* My Emacs Config
+** Conventions used
+I looked through a Github repo containing a collection of users' emacs configs.
+In the root directory, there is usually a folder containing elisp files, which
+will usually be called lisp, init, core, or something else. The elisp files will
+then have a prefix prepended, such as "core-" or "init-". I also knew that I wanted
+some form of autoloads via magic comments to also speed up Emacs loading time, as
+aboabo and d12frosted had done, while not using an extra elisp project management
+tools like Eask, Cask, or Eldev.
+
+*** File naming conventions
+Let us assume that we have the most overengineered complicated directory setup possible,
+and then simplify as needed. Say that we want to split our Emacs config into the
+following setup
+#+begin_export ascii
+ - .config
+  |- emacs
+   |- init.el
+    |- lisp
+     |- core
+      |- core-appearance.el
+      |- core-minibuffer.el
+      |- core-window.el
+     |- init
+      |- init-scheme.el
+      |- init-python.el
+      |- init-c.el
+      |- init-cpp.el
+      |- init-haskell.el
+      |- init-asm.el
+      |- init-common-lisp.el
+      |- init-clojure.el
+      |- init-java.el
+#+end_export
+
+To optimize this setup, the following Makefile rule generates
+autoload statements.
+
+#+begin_src makefile
+  lisp/loaddefs.el: lisp/hooks.el
+	  cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el init
+#+end_src
+
+Then, to make sure that the right init-lang.el file is loaded when lang file
+is opened, we use the following elisp snippet:
+
+#+begin_src elisp
+  (load "loaddefs.el" nil t)
+#+end_src
+
+The following elisp snippet would also be of great utility:
+
+#+begin_src elisp
+  (let ((default-directory (locate-user-emacs-file "lisp/")))
+    (normal-top-level-add-to-load-path '("."))
+    (normal-top-level-add-subdirs-to-load-path))
+#+end_src
+
+If we want to load core-appearance, then the following elisp accomplishes that
+goal:
+
+#+begin_src elisp
+  (require 'core-appearance)
+#+end_src
+
+Most people would agreee that this setup is too redundant. For example, the path
+"lisp/core/core-appearance" has core listed twice. So we might try the following
+instead:
+
+#+begin_src elisp
+   - .config
+  |- emacs
+   |- init.el
+    |- lisp
+     |- core
+      |- appearance.el
+      |- minibuffer.el
+      |- window.el
+     |- init
+      |- scheme.el
+      |- python.el
+      |- c.el
+      |- cpp.el
+      |- haskell.el
+      |- asm.el
+      |- common-lisp.el
+      |- clojure.el
+      |- java.el
+#+end_src
+
+And then, to load appearance, one would simply use the following elisp:
+
+#+begin_src elisp
+  (require 'appearance)
+#+end_src
+
+However, this setup is also not very good, since it is easy to run into namespace
+conflicts. We can attempt to hit two birds with one stone by making some minor
+adjustments to our init.el:
+
+#+begin_src elisp
+  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+  (require 'core/appearance)
+#+end_src
+
+Of course, appearance.el needs to have the following provide statement:
+
+#+begin_src elisp
+  (require 'core/appearance) ;; as opposed to (require 'appearance)
+#+end_src
+
+This simultaneously simplifies the code needed to adjust the load-path, while also
+(for the most part) solving the namespace conflicts. One, however, might suggest the
+following config layout though:
+
+#+begin_export ascii
+ - .config
+  |- emacs
+   |- init.el
+    |- lisp
+     |- core-appearance.el
+     |- core-minibuffer.el
+     |- core-window.el
+     |- init-scheme.el
+     |- init-python.el
+     |- init-c.el
+     |- init-cpp.el
+     |- init-haskell.el
+     |- init-asm.el
+     |- init-common-lisp.el
+     |- init-clojure.el
+     |- init-java.el
+#+end_export
+
+Of course, the Makefile rule that generates loaddefs.el would need the following adjustment:
+
+#+begin_src makefile
+    lisp/loaddefs.el: lisp/hooks.el
+	    cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el .
+#+end_src
+
+The reason that I decided to not choose the flattened directory layout was due to the
+additionial core-*.el files that loaddefs-generate-batch would can over. As many
+enthusiastic Emacs users might be able to tell, this Emacs config was heavily based
+on aboabo's Emacs config. When looking at his configuration, I was curious about how
+many files in his modes directory did NOT contain autoloads. I used the grep command
+to determine this:
+
+#+begin_src sh
+  grep -L "autoload" modes/*.el
+#+end_src
+
+These were the files that did NOT contain autoloads:
+
+#+begin_export ascii
+modes/ora-auto.el
+modes/ora-avy.el
+modes/ora-bookmark.el
+modes/ora-company.el
+modes/ora-elfeed.el
+modes/ora-elisp-style-guide.el
+modes/ora-epa.el
+modes/ora-fonts.el
+modes/ora-grep.el
+modes/ora-helm.el
+modes/ora-hydra.el
+modes/ora-ivy.el
+modes/ora-keepassxc.el
+modes/ora-lsp.el
+modes/ora-magit.el
+modes/ora-org-babel.el
+modes/ora-org-babel-inline.el
+modes/ora-org-roam.el
+modes/ora-package.el
+modes/ora-projectile.el
+modes/ora-search.el
+modes/ora-smime.el
+modes/ora-visuals.el
+#+end_export
+
+loaddefs.el for the most part contained a lot of register-definition-prefixes that seemed
+unnecessary. Since I wanted to make sure that loaddefs.el would only autoload/register-
+definition-prefixes for necessary things, I decided to use the non-flattened layout.
+Generating loaddefs.el for aboabo's Emacs config is left as an exercise to the reader,
+since the function that he uses to generate loaddefs.el (update-directory-autoloads)
+is considered obsolete.
+
+*** Function naming conventions
+This is a convention that I'm not using yet, but I plan to prefix every elisp function
+in my config with "my/". After working with d12frosted's Vulpea library and incorporating
+org roam (or trying and failing), I realized why so many Emacs users prepend functions
+with something. For example, there is a function called vulpea-project-p that I copied
+from d12frosted's Task Management with Org Roam. It is not really possible to tell
+whether it is part of the Vulpea library or not, but renaming it to "my/vulpea-project-p"
+makes things a lot clearer.
+
+** FAQ
+*** Why no use-package?
+Here is what use-package does:
+1) Install the package if it is not already installed
+2) Load/require the package
+3) Apply any configurations set in its body
+
+I personally feel like this is too much for my taste, as I believe that
+a function/macro should do one thing and do it well. So instead of use-package,
+I just use plain old require.
+
+*** Why multiple files instead of a single file?
+For most coding projects, it is recommended to create multiple files instead of a
+single file. An Emacs config is also a project. So why would you want to shove all
+of your Emacs config into one single Org Mode file or a single init.el? Not to mention
+that finding the cause of a bug seems like it would be harder with a single file,
+since one would have to bisect until the error is found.

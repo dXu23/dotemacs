@@ -1,19 +1,136 @@
+[submodule "all-the-icons"]
+	path = lib/all-the-icons
+	url = https://github.com/domtronn/all-the-icons.el
+[submodule "all-the-icons-completion"]
+	path = lib/all-the-icons-completion
+	url = https://github.com/iyefrat/all-the-icons-completion
+[submodule "auctex"]
+	path = lib/auctex
+	url = https://git.savannah.gnu.org/git/auctex.git
+	load-path = .
+	build-step = ./autogen.sh
+	build-step = ./configure --with-lispdir=~/.emacs.d/lib/auctex
+	build-step = make
+	build-step = make doc
+	build-step = borg-maketex
+	build-step = borg-makeinfo
+	build-step = borg-update-autoloads
+[submodule "auto-compile"]
+	path = lib/auto-compile
+	url = https://github.com/emacscollective/auto-compile
 [submodule "borg"]
 	path = lib/borg
 	url = git@github.com:emacscollective/borg.git
+[submodule "cape"]
+	path = lib/cape
+	url = https://github.com/minad/cape
+[submodule "cider"]
+	path = lib/cider
+	url = https://github.com/clojure-emacs/cider
 [submodule "closql"]
 	path = lib/closql
 	url = git@github.com:emacscollective/closql.git
+[submodule "compat"]
+	path = lib/compat
+	url = https://git.sr.ht/~pkal/compat
+[submodule "corfu"]
+	path = lib/corfu
+	url = https://github.com/minad/corfu
+[submodule "dash"]
+	path = lib/dash
+	url = https://github.com/magnars/dash.el
+[submodule "dune"]
+	path = lib/dune
+	url = git@github.com:emacsmirror/dune.git
 [submodule "emacsql"]
 	path = lib/emacsql
 	url = git@github.com:skeeto/emacsql.git
 	no-byte-compile = emacsql-pg.el
-[submodule "compat"]
-	path = lib/compat
-	url = https://git.sr.ht/~pkal/compat
-[submodule "llama"]
-	path = lib/llama
-	url = https://git.sr.ht/~tarsius/llama
 [submodule "epkg"]
 	path = lib/epkg
 	url = git@github.com:emacscollective/epkg.git
+[submodule "esxml"]
+	path = lib/esxml
+	url = https://github.com/tali713/esxml
+[submodule "f"]
+	path = lib/f
+	url = https://github.com/rejeep/f.el
+[submodule "flycheck"]
+	path = lib/flycheck
+	url = https://github.com/flycheck/flycheck
+[submodule "flycheck-ocaml"]
+	path = lib/flycheck-ocaml
+	url = https://github.com/flycheck/flycheck-ocaml
+[submodule "geiser"]
+	path = lib/geiser
+	url = https://gitlab.com/emacs-geiser/geiser
+[submodule "geiser-mit"]
+	path = lib/geiser-mit
+	url = https://gitlab.com/emacs-geiser/mit
+[submodule "ht"]
+	path = lib/ht
+	url = https://github.com/Wilfred/ht.el
+[submodule "hydra"]
+	path = lib/hydra
+	url = https://github.com/abo-abo/hydra
+[submodule "llama"]
+	path = lib/llama
+	url = https://git.sr.ht/~tarsius/llama
+[submodule "lsp-mode"]
+	path = lib/lsp-mode
+	url = https://github.com/emacs-lsp/lsp-mode
+	load-path = .
+	load-path = clients
+[submodule "lsp-ui"]
+	path = lib/lsp-ui
+	url = https://github.com/emacs-lsp/lsp-ui
+[submodule "magit"]
+	path = lib/magit
+	url = https://github.com/magit/magit
+[submodule "marginalia"]
+	path = lib/marginalia
+	url = https://github.com/minad/marginalia
+[submodule "markdown-mode"]
+	path = lib/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode
+[submodule "merlin"]
+	path = lib/merlin
+	url = git@github.com:emacsmirror/merlin.git
+[submodule "merlin-eldoc"]
+	path = lib/merlin-eldoc
+	url = https://github.com/Khady/merlin-eldoc
+[submodule "nov"]
+	path = lib/nov
+	url = https://depp.brause.cc/nov.el.git
+[submodule "orderless"]
+	path = lib/orderless
+	url = https://github.com/oantolin/orderless
+[submodule "org-bullets"]
+	path = lib/org-bullets
+	url = https://github.com/integral-dw/org-bullets
+[submodule "org-roam"]
+	path = lib/org-roam
+	url = https://github.com/org-roam/org-roam
+[submodule "s"]
+	path = lib/s
+	url = https://github.com/magnars/s.el
+[submodule "spinner"]
+	path = lib/spinner
+	url = https://github.com/Malabarba/spinner.el
+[submodule "tuareg"]
+	path = lib/tuareg
+	url = https://github.com/ocaml/tuareg
+[submodule "vertico"]
+	path = lib/vertico
+	url = https://github.com/minad/vertico
+	load-path = .
+	load-path = extensions
+[submodule "vulpea"]
+	path = lib/vulpea
+	url = https://github.com/d12frosted/vulpea
+[submodule "which-key"]
+	path = lib/which-key
+	url = https://github.com/justbur/emacs-which-key
+[submodule "with-editor"]
+	path = lib/with-editor
+	url = https://github.com/magit/with-editor
