@@ -1,3 +1,22 @@
+;;; vulpea-agenda.el --- Vulpea agenda library       -*- lexical-binding: t; -*-
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+;;; Code:
+
+
 (require 'org)
 (require 'vulpea)
 
@@ -22,10 +41,15 @@
 
 
 
+;; The following code optimizes org agenda indexing. It
+;; takes too long to simply iterate over each file in
+;; `org-roam-directory' and then add each TODO to the
+;; agenda.
+
 ;;;###autoload
 (defun my/vulpea-agenda-files-update (&rest _)
   "Update the value of `org-agenda-files'."
-  (setq org-agenda-files (vulpea-project-files)))
+  (setq org-agenda-files (my/vulpea-project-files)))
 
 
 
@@ -47,7 +71,7 @@ longer than LEN.
 Usage example:
 
   (setq org-agenda-prefix-format
-	'((agenda . \" %(vulpea-agenda-category) %?-12t %12s\")))
+	'((agenda . \" %(my/vulpea-agenda-category) %?-12t %12s\")))
 
 Refer to `org-agenda-prefix-format' for more information."
   (let* ((file-name (when buffer-file-name
@@ -68,3 +92,4 @@ Refer to `org-agenda-prefix-format' for more information."
 
 
 (provide 'lib/vulpea-agenda)
+;;; vulpea-agenda.el ends here

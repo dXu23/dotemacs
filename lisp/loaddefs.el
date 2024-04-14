@@ -41,6 +41,57 @@
 ;;; Generated autoloads from config/python.el
 
 (autoload 'my/python-setup "config/python")
+(register-definition-prefixes "config/python" '("python-compile-command"))
+
+
+
+;;; Generated autoloads from config/rust.el
+
+(autoload 'my/rust-setup "config/rust")
+(register-definition-prefixes "config/rust" '("my/rustic-mode-hook"))
+
+
+;;; Generated autoloads from config/common-lisp.el
+
+(autoload 'my/common-lisp-setup "config/common-lisp" "\
+")
+
+
+;;; Generated autoloads from config/racket.el
+
+(autoload 'my/racket-setup "config/racket")
+
+
+;;; Generated autoloads from config/clojure.el
+
+(autoload 'my/clojure-setup "config/clojure")
+
+
+;;; Generated autoloads from config/typescript.el
+
+(autoload 'my/typescript-setup "config/typescript")
+
+
+;;; Generated autoloads from config/docker.el
+
+(autoload 'my/docker-setup "config/docker")
+
+
+;;; Generated autoloads from config/latex.el
+
+(autoload 'my/latex-setup "config/latex")
+(register-definition-prefixes "config/latex" '("my/LaTeX-self-insert"))
+
+
+;;; Generated autoloads from config/perl.el
+
+(autoload 'my/perl-setup "config/perl")
+
+
+;;; Generated autoloads from config/c.el
+
+(autoload 'my/c-setup "config/c" "\
+Sets up Treesitter for C.")
 
 ;;; End of scraped data
 

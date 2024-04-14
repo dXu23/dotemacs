@@ -38,7 +38,7 @@ autoload statements.
 
 #+begin_src makefile
   lisp/loaddefs.el: lisp/hooks.el
-	  cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el init
+          cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el init
 #+end_src
 
 Then, to make sure that the right init-lang.el file is loaded when lang file
@@ -67,7 +67,7 @@ Most people would agreee that this setup is too redundant. For example, the path
 "lisp/core/core-appearance" has core listed twice. So we might try the following
 instead:
 
-#+begin_src elisp
+#+begin_src
    - .config
   |- emacs
    |- init.el
@@ -107,11 +107,11 @@ adjustments to our init.el:
 Of course, appearance.el needs to have the following provide statement:
 
 #+begin_src elisp
-  (require 'core/appearance) ;; as opposed to (require 'appearance)
+  (provide 'core/appearance) ;; as opposed to (require 'appearance)
 #+end_src
 
 This simultaneously simplifies the code needed to adjust the load-path, while also
-(for the most part) solving the namespace conflicts. One, however, might suggest the
+(for the most part) reducing the chances of a namespace conflict. One, however, might suggest the
 following config layout though:
 
 #+begin_export ascii
@@ -119,6 +119,7 @@ following config layout though:
   |- emacs
    |- init.el
     |- lisp
+     |- hooks.el
      |- core-appearance.el
      |- core-minibuffer.el
      |- core-window.el
@@ -137,11 +138,11 @@ Of course, the Makefile rule that generates loaddefs.el would need the following
 
 #+begin_src makefile
     lisp/loaddefs.el: lisp/hooks.el
-	    cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el .
+            cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el .
 #+end_src
 
 The reason that I decided to not choose the flattened directory layout was due to the
-additionial core-*.el files that loaddefs-generate-batch would can over. As many
+additionial core-*.el files that loaddefs-generate-batch would scan over. As many
 enthusiastic Emacs users might be able to tell, this Emacs config was heavily based
 on aboabo's Emacs config. When looking at his configuration, I was curious about how
 many files in his modes directory did NOT contain autoloads. I used the grep command
@@ -190,7 +191,7 @@ is considered obsolete.
 This is a convention that I'm not using yet, but I plan to prefix every elisp function
 in my config with "my/". After working with d12frosted's Vulpea library and incorporating
 org roam (or trying and failing), I realized why so many Emacs users prepend functions
-with something. For example, there is a function called vulpea-project-p that I copied
+with a "pseudo namespace". For example, there is a function called vulpea-project-p that I copied
 from d12frosted's Task Management with Org Roam. It is not really possible to tell
 whether it is part of the Vulpea library or not, but renaming it to "my/vulpea-project-p"
 makes things a lot clearer.

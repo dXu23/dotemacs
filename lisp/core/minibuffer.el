@@ -1,19 +1,6 @@
 ;; Utility libraries
 (require 'seq)
 
-;;; Marginalia configuration
-(require 'marginalia)
-
-(define-key minibuffer-local-map (kbd "M-a") 'marginalia-cycle)
-(customize-set-variable 'marginalia-max-relative-age 0)
-(customize-set-variable 'marginalia-align 'right)
-
-;;; All-the-icons-completion
-(require 'all-the-icons-completion)
-(add-hook 'marginalia-mode #'all-the-icons-completion-marginalia-setup)
-(all-the-icons-completion-mode)
-
-
 ;;; Vertico configuration
 (require 'vertico)
 (customize-set-variable 'vertico-count 13)
@@ -96,6 +83,21 @@
 (vertico-mode)
 (vertico-multiform-mode)
 
+;;; Marginalia configuration
+(require 'marginalia)
+
+(define-key minibuffer-local-map (kbd "M-a") 'marginalia-cycle)
+(customize-set-variable 'marginalia-max-relative-age 0)
+(customize-set-variable 'marginalia-align 'right)
+
+(marginalia-mode)
+
+;;; All-the-icons-completion
+(require 'all-the-icons-completion)
+(add-hook 'marginalia-mode #'all-the-icons-completion-marginalia-setup)
+(all-the-icons-completion-mode)
+
+
 ;;; Orderless
 (require 'orderless)
 (customize-set-variable 'completion-styles '(orderless))
@@ -133,7 +135,7 @@ This means the characters in COMPONENT must occur in the
 candidate in that order at the beginning of subsequent words
 comprised of letter. Only non-letters can be in between the
 words that start with the initials."
-  (orderless-strict-*-initialism component))
+  (orderless--strict-*-initialism component))
 
 (defun prot-orderless-literal-dispatcher (pattern _index _total)
   "Literal style dispatcher using the equals sign as a suffix.
@@ -155,5 +157,25 @@ It matches PATTERN, _INDEX, and _TOTAL according to how Orderless
 parses its input."
   (when (string-suffix-p "." pattern)
     `(orderless-flex . ,(substring pattern 0 -1))))
+
+(require 'consult)
+(require 'consult-register)
+
+(global-set-key (kbd "C-x b") #'consult-buffer)
+(global-set-key (kbd "C-x 4 b") #'consult-buffer-other-window)
+(global-set-key (kbd "C-x 5 b") #'consult-buffer-other-frame)
+(global-set-key (kbd "C-x r b") #'consult-bookmark)
+(global-set-key (kbd "C-x p b") #'consult-project-buffer)
+(global-set-key (kbd "M-y") #'consult-yank-pop)
+(global-set-key (kbd "M-g g") #'consult-goto-line)
+(global-set-key (kbd "M-g i") #'consult-imenu)
+
+(setq register-preview-delay 0.5
+      register-preview-function #'consult-register-format)
+
+(advice-add #'register-preview :override #'consult-register-window)
+
+(setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
 
 (provide 'core/minibuffer)

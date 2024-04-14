@@ -9,7 +9,7 @@
 ;;;###autoload
 (defun my/haskell-setup ()
   (flycheck-mode)
-  (lsp)
+  (lsp-deferred)
   (lsp-ui-mode))
 
 (provide 'config/haskell)

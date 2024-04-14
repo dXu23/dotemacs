@@ -1,18 +1,25 @@
 (require 'org)
 (require 'org-bullets)
 
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+
 ;;; Org Babel
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((R . t)
+ '(
    (awk . t)
-   (python . t)
-   (ruby . t)
+   (ditaa . t)
+   (dot . t)
    (emacs-lisp . t)
-   (dot . t)))
+   (latex . t)
+   (octave . t)
+   (plantuml . t)
+   (python . t)
+   (R . t)
+   (ruby . t)))
 
 ;;; Speed keys
-(customize-set-variable 'org-use-speed-command t)
+(customize-set-variable 'org-use-speed-commands t)
 
 ;; Set priority range from A to C with default A
 (setq org-highest-priority ?A
@@ -20,16 +27,16 @@
       org-default-priority ?A)
 
 ;; Set org-log-done to true
-(customize-set-variable 'org-log-done 'note)
+(customize-set-variable 'org-log-done 'time)
 
 ;;;; Turn off org-goto-auto-isearch
 (customize-set-variable 'org-goto-auto-isearch nil)
 
 
-
 ;;;###autoload
 (defun my/org-setup ()
   (org-bullets-mode)
+  (auto-fill-mode)
   (prettify-symbols-mode))
 
 ;; Open org agenda in current window

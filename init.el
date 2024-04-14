@@ -25,9 +25,9 @@
 
 (with-eval-after-load 'magit
   (magit-add-section-hook 'magit-status-sections-hook
-			  'magit-insert-modules
-			  'magit-insert-stashes
-			  'append))
+                          'magit-insert-modules
+                          'magit-insert-stashes
+                          'append))
 
 (require 'auto-compile)
 (auto-compile-on-load-mode)
@@ -55,13 +55,15 @@
 (global-set-key (kbd "C-c r") 'config-reload)
 
 ;;; Basic Settings
+(setq-default indent-tabs-mode nil)
+
 (setq inhibit-startup-message t)
 
 (repeat-mode 1)
 
 (setq create-lockfiles nil)
 
-(setq
+(setopt
  make-backup-files t
  backup-by-copying nil
  version-control t
@@ -77,7 +79,14 @@
 
 (prefer-coding-system 'utf-8)
 
-(setq gc-cons-threshold 50000000)
+;; Adjust garbage collection thresholds during startup
+(let ((normal-gc-cons-threshold (* 20 1024 1024))
+      (init-gc-cons-threshold (* 128 1024 1024)))
+  (setq gc-cons-threshold init-gc-cons-threshold)
+  (add-hook 'emacs-startup-hook
+            (lambda () (setq gc-cons-threshold
+                             normal-gc-cons-threshold))))
+
 
 (setq large-file-warning-threshold 100000000)
 
@@ -87,10 +96,13 @@
 (setq fill-column 80)
 
 ;; Buffer related settings
-(setq switch-to-buffer-in-dedicated-window 'pop
-      switch-to-buffer-obey-display-actions t)
+(setopt switch-to-buffer-in-dedicated-window 'pop
+        switch-to-buffer-obey-display-actions t)
 
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(let ((emacs-home (if-let ((xdg (getenv "XDG_CONFIG_HOME")))
+                      (expand-file-name "emacs/" xdg)
+                    user-emacs-directory)))
+  (add-to-list 'load-path (expand-file-name "lisp" emacs-home)))
 
 ;; Tab bar mode
 (tab-bar-mode 1)
@@ -99,25 +111,29 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (customize-set-variable 'ibuffer-saved-filter-groups
-			(quote (("default"
-				 ("dired" (mode . dired-mode))
-				 ("org" (mode . org-mode))
-				 ("magit" (name . "^magit"))
-				 ("planner" (or
-					     (name . "^\\*Calendar\\*$")
-					     (name . "^\\*Org Agenda\\*")))
-				 ("emacs" (or
-					   (name . "^\\*scratch\\*$")
-					   (name . "^\\*Messages\\*$")))))))
+                        (quote (("default"
+                                 ("dired" (mode . dired-mode))
+                                 ("org" (mode . org-mode))
+                                 ("magit" (name . "^magit"))
+                                 ("planner" (or
+                                             (name . "^\\*Calendar\\*$")
+                                             (name . "^\\*Org Agenda\\*")))
+                                 ("emacs" (or
+                                           (name . "^\\*scratch\\*$")
+                                           (name . "^\\*Messages\\*$")))))))
 
 (require 'ibuf-ext)
 (add-hook 'ibuffer-mode-hook
-	  (lambda ()
-	    (ibuffer-switch-to-saved-filter-groups "default")))
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 (put 'downcase-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'scroll-left 'disabled nil)
+(put 'scroll-right 'disabled nil)
+
+
 
 (require 'kmacro)
 (defalias 'kmacro-insert-macro 'insert-kbd-macro)
@@ -125,9 +141,9 @@
 
 ;; Prevent blank strings from being put in kill ring
 (customize-set-variable 'kill-transform-function
-			(lambda (string)
-			  (and (not (not string-blank-p string))
-			       string)))
+                        (lambda (string)
+                          (and (not (not string-blank-p string))
+                               string)))
 
 (pixel-scroll-precision-mode)
 
@@ -142,18 +158,31 @@
 (require 'which-key)
 (which-key-mode)
 
-;; Trying to configure vulpea with org just seems too difficult
-;; (require 'core-org)
+(defadvice compile (before ad-compile-start activate)
+  "Advises `compile' so that it sets the argument COMINT to t."
+  (ad-set-arg 1 t))
+
+(pdf-tools-install)
+(pdf-loader-install)
+
+(customize-set-variable 'display-raw-bytes-as-hex t)
+
+(require 'core/auto)
+
 (require 'core/appearance)
 (require 'core/window)
 (require 'core/completion)
 (require 'core/minibuffer)
 (require 'core/prog)
+(require 'core/non-builtin-modes)
+
+(require 'init/org)
+(require 'init/common-lisp)
 
 (require 'hooks)
 (load "loaddefs" nil t)
 
-(require 'init/org)
+
 
 ;;; init.el ends here
 ;;

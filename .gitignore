@@ -1,2 +1,4 @@
 /epkgs/
 bookmarks
+.lsp-session-v*
+persist
