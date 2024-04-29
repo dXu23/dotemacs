@@ -20,6 +20,7 @@
 ;;; Generated autoloads from config/java.el
 
 (autoload 'my/java-setup "config/java")
+(register-definition-prefixes "config/java" '("my/get-"))
 
 
 ;;; Generated autoloads from config/ocaml.el
@@ -31,6 +32,7 @@
 
 (autoload 'my/org-setup "config/org")
 (autoload 'my/org-agenda-setup "config/org")
+(register-definition-prefixes "config/org" '("my/org-ispell"))
 
 
 ;;; Generated autoloads from config/scheme.el
@@ -42,7 +44,6 @@
 
 (autoload 'my/python-setup "config/python")
 (register-definition-prefixes "config/python" '("python-compile-command"))
-
 
 
 ;;; Generated autoloads from config/rust.el
@@ -92,6 +93,12 @@
 
 (autoload 'my/c-setup "config/c" "\
 Sets up Treesitter for C.")
+
+
+
+;;; Generated autoloads from config/eshell.el
+
+(autoload 'my/eshell-setup "config/eshell")
 
 ;;; End of scraped data
 

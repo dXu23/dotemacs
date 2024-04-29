@@ -16,7 +16,7 @@
 (add-hook 'java-ts-mode-hook #'my/java-setup)
 (add-hook 'c-ts-mode-hook #'my/c-setup)
 (add-hook 'rust-ts-mode-hook #'my/rust-setup)
-(add-hook 'python-ts-mode-hook #'my/python-setup)
+(add-hook 'python-base-mode-hook #'my/python-setup)
 (add-hook 'typescript-ts-mode-hook #'my/typescript-setup)
 
 (provide 'hooks)

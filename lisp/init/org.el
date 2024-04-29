@@ -10,12 +10,16 @@
 ;; Ben J. Maughan
 ;; Website: <https://pragmaticemacs.wordpress.com>
 ;; Article: <https://pragmaticemacs.wordpress.com/2015/12/08/org-mode-basics-vii-a-todo-list-with-schedules-and-deadlines/>
+;;
 
 ;;; Requires
+(require 'cl-lib)
+
 (require 'org)
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-protocol)
+(require 'org-noter)
 
 (require 'vulpea)
 (require 'org-roam)
@@ -222,6 +226,23 @@ See also `org-save-all-org-buffers'"
 (keymap-set org-roam-dailies-map "T" 'org-roam-dailies-capture-tomorrow)
 
 (keymap-set global-map "C-c n d" 'org-roam-dailies-map)
+
+(defun my/org-roam-filter-tag-fn (tag-names)
+  "Returns a function that filters a node if its `tag-names'
+are a subset of its tags"
+  (lambda (node)
+    (cl-subsetp tag-names (org-roam-node-tags node))))
+
+(defun my/org-roam-find-by-tags (tags)
+  "Filters by tags"
+  (interactive
+   (list (let ((crm-separator "[        ]*:[    ]*"))
+           (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
+  (org-roam-node-find nil nil
+                      (my/org-roam-filter-tag-fn tags)))
+
+;;; Org-noter settings
+(org-noter-enable-org-roam-integration)
 
 (provide 'init/org)
 

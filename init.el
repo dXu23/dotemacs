@@ -7,12 +7,12 @@
 ;;
 ;; The following keystrokes may be useful for navigating the config
 ;; file:
-;; C-c C-@ C-t : Fold text under subheadings
-;; C-c C-@ C-a : Reveal text under subheadings
-;; C-c C-@ C-n : Move to next visible heading
-;; C-c C-@ C-p : Move to previous visible heading
-;; C-c C-@ C-f : Move to next heading on same level
-;; C-c C-@ C-p : Move to previous heading on same level
+;; C-c @ C-t : Fold text under subheadings
+;; C-c @ C-a : Reveal text under subheadings
+;; C-c @ C-n : Move to next visible heading
+;; C-c @ C-p : Move to previous visible heading
+;; C-c @ C-f : Move to next heading on same level
+;; C-c @ C-p : Move to previous heading on same level
 
 ;;; Basic config for Borg
 (when (< emacs-major-version 27)
@@ -133,8 +133,7 @@
 (put 'scroll-left 'disabled nil)
 (put 'scroll-right 'disabled nil)
 
-
-
+;;; Macro settings
 (require 'kmacro)
 (defalias 'kmacro-insert-macro 'insert-kbd-macro)
 ;; (define-key kmacro-keymap (kbd "I") #'kmacro-insert-macro)

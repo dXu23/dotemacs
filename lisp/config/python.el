@@ -1,6 +1,7 @@
 ;;; config/python.el --- Config file for python files -*- lexical-binding: t; -*-
 
 (require 'compile)
+(require 'pet)
 (require 'lsp)
 (require 'lsp-ui)
 
@@ -12,4 +13,6 @@
 ;;;###autoload
 (defun my/python-setup ()
   (setq-local compile-command #'python-compile-command)
-  (lsp-deferred))
+  (lsp-deferred)
+  (if (project-current nil)
+      (pet-mode -10)))

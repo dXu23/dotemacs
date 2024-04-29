@@ -16,7 +16,8 @@
    (plantuml . t)
    (python . t)
    (R . t)
-   (ruby . t)))
+   (ruby . t)
+   (shell . t)))
 
 ;;; Speed keys
 (customize-set-variable 'org-use-speed-commands t)
@@ -33,11 +34,20 @@
 (customize-set-variable 'org-goto-auto-isearch nil)
 
 
+(defun my/org-ispell ()
+  "Configure `ispell-skip-region-alist' for `org-mode'."
+  (make-local-variable 'ispell-skip-region-alist)
+  (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+  (add-to-list 'ispell-skip-region-alist '("~" "~"))
+  (add-to-list 'ispell-skip-region-alist '("=" "="))
+  (add-to-list 'ispell-skip-region-alist '("^#\\+begin_src" . "^#\\+end_src")))
+
 ;;;###autoload
 (defun my/org-setup ()
   (org-bullets-mode)
   (auto-fill-mode)
-  (prettify-symbols-mode))
+  (prettify-symbols-mode)
+  (my/org-ispell))
 
 ;; Open org agenda in current window
 (setq org-agenda-window-setup (quote current-window))
