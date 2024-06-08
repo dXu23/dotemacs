@@ -9,11 +9,11 @@
 (define-key 'rustic-mode-map "C-c C-c s" . #'lsp-rust-analyzer-status)
 
 (setopt lifetime-elision-hints-enable "skip_trivial"
-	chaining-hints t
-	lifetime-elision-hints-use-parameter-names nil
-	closure-return-type-hints t
-	parameter-hints nil
-	reborrow-hints nil)
+        chaining-hints t
+        lifetime-elision-hints-use-parameter-names nil
+        closure-return-type-hints t
+        parameter-hints nil
+        reborrow-hints nil)
 
 (setq rustic-format-on-save t)
 

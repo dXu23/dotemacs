@@ -194,6 +194,8 @@ See also `org-save-all-org-buffers'"
 (with-eval-after-load 'org-roam
   (org-roam-db-autosync-enable))
 
+(customize-set-variable 'org-roam-completion-everywhere t)
+
 (customize-set-variable 'org-roam-dailies-caputre-templates
                         '(("d" "default" entry "* %<%I:%M %p>: %?"
                            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))

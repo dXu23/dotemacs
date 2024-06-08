@@ -54,6 +54,9 @@
 [submodule "dash"]
         path = lib/dash
         url = https://github.com/magnars/dash.el
+[submodule "djvu"]
+        path = lib/djvu
+        url = git@github.com:emacsmirror/djvu.git
 [submodule "docker"]
         path = lib/docker
         url = https://github.com/Silex/docker.el
@@ -103,6 +106,9 @@
 [submodule "gnuplot-mode"]
         path = lib/gnuplot-mode
         url = https://github.com/mkmcc/gnuplot-mode
+[submodule "gptel"]
+        path = lib/gptel
+        url = https://github.com/karthink/gptel
 [submodule "ht"]
         path = lib/ht
         url = https://github.com/Wilfred/ht.el
@@ -165,6 +171,9 @@
 [submodule "org-pandoc-import"]
         path = lib/org-pandoc-import
         url = https://github.com/tecosaur/org-pandoc-import.git
+        load-path = .
+        load-path = filters
+        load-path = preprocessors
 [submodule "org-roam"]
         path = lib/org-roam
         url = https://github.com/org-roam/org-roam
