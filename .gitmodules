@@ -27,9 +27,15 @@
 [submodule "borg"]
         path = lib/borg
         url = git@github.com:emacscollective/borg.git
+[submodule "buttercup"]
+        path = lib/buttercup
+        url = https://github.com/jorgenschaefer/emacs-buttercup
 [submodule "cape"]
         path = lib/cape
         url = https://github.com/minad/cape
+[submodule "cdlatex"]
+        path = lib/cdlatex
+        url = https://github.com/cdominik/cdlatex
 [submodule "cider"]
         path = lib/cider
         url = https://github.com/clojure-emacs/cider
@@ -54,6 +60,9 @@
 [submodule "dash"]
         path = lib/dash
         url = https://github.com/magnars/dash.el
+[submodule "deferred"]
+        path = lib/deferred
+        url = https://github.com/kiwanami/emacs-deferred
 [submodule "djvu"]
         path = lib/djvu
         url = git@github.com:emacsmirror/djvu.git
@@ -69,6 +78,9 @@
 [submodule "elfeed"]
         path = lib/elfeed
         url = https://github.com/skeeto/elfeed
+[submodule "elisp-refs"]
+        path = lib/elisp-refs
+        url = https://github.com/Wilfred/elisp-refs
 [submodule "emacsql"]
         path = lib/emacsql
         url = git@github.com:skeeto/emacsql.git
@@ -109,6 +121,12 @@
 [submodule "gptel"]
         path = lib/gptel
         url = https://github.com/karthink/gptel
+[submodule "haskell-mode"]
+        path = lib/haskell-mode
+        url = https://github.com/haskell/haskell-mode
+[submodule "helpful"]
+        path = lib/helpful
+        url = https://github.com/Wilfred/helpful
 [submodule "ht"]
         path = lib/ht
         url = https://github.com/Wilfred/ht.el
@@ -118,6 +136,12 @@
 [submodule "inf-ruby"]
         path = lib/inf-ruby
         url = https://github.com/nonsequitur/inf-ruby
+[submodule "julia-mode"]
+        path = lib/julia-mode
+        url = https://github.com/JuliaEditorSupport/julia-emacs
+[submodule "julia-repl"]
+        path = lib/julia-repl
+        url = https://github.com/tpapp/julia-repl
 [submodule "llama"]
         path = lib/llama
         url = https://git.sr.ht/~tarsius/llama
@@ -203,9 +227,15 @@
 [submodule "pikchr-mode"]
         path = lib/pikchr-mode
         url = https://github.com/kljohann/pikchr-mode
+[submodule "queue"]
+        path = lib/queue
+        url = git@github.com:emacsmirror/queue.git
 [submodule "racket-mode"]
         path = lib/racket-mode
         url = https://github.com/greghendershott/racket-mode
+[submodule "request"]
+        path = lib/request
+        url = https://github.com/tkf/emacs-request
 [submodule "restclient"]
         path = lib/restclient
         url = https://github.com/pashky/restclient.el
@@ -224,6 +254,9 @@
 [submodule "slime"]
         path = lib/slime
         url = https://github.com/slime/slime
+[submodule "sly"]
+        path = lib/sly
+        url = https://github.com/joaotavora/sly
 [submodule "spinner"]
         path = lib/spinner
         url = https://github.com/Malabarba/spinner.el

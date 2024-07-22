@@ -149,13 +149,15 @@
 ;; Delete any redundant white space after saving a file
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-;; Dired-X
+;;; Dired-X
 (with-eval-after-load 'dired
   (customize-set-variable 'dired-x-hands-off-my-keys nil)
   (require 'dired-x))
 
 (require 'which-key)
 (which-key-mode)
+
+; (advice-add 'compile :before (lambda () (ad-set-arg 1 t)))
 
 (defadvice compile (before ad-compile-start activate)
   "Advises `compile' so that it sets the argument COMINT to t."
@@ -176,6 +178,7 @@
 (require 'core/non-builtin-modes)
 
 (require 'init/org)
+(require 'init/elfeed)
 (require 'init/common-lisp)
 
 (require 'hooks)

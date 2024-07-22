@@ -46,6 +46,8 @@ If called with a single \\[universal-argument], just call
   (push ("§ {1}"   . ("section" "section*"      )) TeX-fold-macro-spec-list)
   (push ("§§ {1}"  . ("subsection" "subsection*")) TeX-fold-macro-spec-list)
   (push ("¶ {1}"   . ("paragraph" "paragraph*"  )) TeX-fold-macro-spec-list)
+
+  (prettify-symbols-mode)
   )
 
 

@@ -43,7 +43,7 @@
 ;;; Generated autoloads from config/python.el
 
 (autoload 'my/python-setup "config/python")
-(register-definition-prefixes "config/python" '("python-compile-command"))
+(register-definition-prefixes "config/python" '("move-to-next-container" "python-compile-command"))
 
 
 ;;; Generated autoloads from config/rust.el
@@ -99,6 +99,13 @@ Sets up Treesitter for C.")
 ;;; Generated autoloads from config/eshell.el
 
 (autoload 'my/eshell-setup "config/eshell")
+
+
+
+;;; Generated autoloads from config/julia.el
+
+(autoload 'my/julia-setup "config/julia" "\
+Sets up Julia")
 
 ;;; End of scraped data
 

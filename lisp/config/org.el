@@ -1,6 +1,12 @@
 (require 'org)
 (require 'org-bullets)
 
+(require 'tex)
+(require 'latex)
+
+(require 'xref)
+(require 'reftex-ref)
+
 (setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
 
 ;;; Org Babel
@@ -21,6 +27,91 @@
 
 ;;; Speed keys
 (customize-set-variable 'org-use-speed-commands t)
+
+(font-lock-add-keywords
+ 'org-mode
+ '(("\\(\\(?:\\\\\\(?:label\\|ref\\|eqref\\)\\)\\){\\(.+?\\)}"
+    (1 font-lock-keyword-face)
+    (1 font-lock-constant-face))))
+
+(defun my/show-org-tex-item-at-point ()
+  (when (and (derived-p 'org-mode) (org-invisible-p))
+    (org-fold-show-context 'link-search))
+  (when eldoc-mode (eldoc--invoke-strategy t))
+  (pcase-let
+      ((`(,_ . ,ov)
+        (get-char-property-and-overlay (point) 'TeX-fold-type))
+       (when ov (TeX-fold-show-item ov)))))
+
+(defun my/search-org-cite-face (text-prop-search-defun &optional tff)
+  (let ((face-list '(font-lock-constant-face org-cite)))
+    (funcall text-prop-search-defun
+             'face
+             nil
+             (if tff
+                 (cons 'TeX-fold-folded-face face-list)
+               face-list)
+             t)))
+
+(defun my/next-reference-or-label (_arg)
+  (interactive "p")
+  (pcase-let
+      ((`(,_ . ,ov)
+        (get-char-property-and-overlay (point) 'Tex-fold-type))
+       (prop (save-excursion
+               (my/search-org-cite-face #'text-property-search-forward))))
+    (when ov (TeX-fold-hide-item ov))
+    (if prop
+        (progn (goto-char (prop-match-beginning prop))
+               (my/show-org-tex-item-at-point))
+      (message "No more references/labels."))))
+
+(defun my/previous-reference-or-label (_arg)
+  (interactive "p")
+  (pcase-let
+      ((`(,_ . ,ov)
+        (get-char-property-and-overlay (point) 'TeX-fold-type))
+       (p (save-excursion
+            (and (my/search-org-cite-face #'text-property-search-backward t)
+                 (point)))))
+    (when ov (TeX-fold-hide-item ov))
+    (when p
+      (goto-char p)
+      (my/show-org-tex-item-at-point))))
+
+(keymap-set org-mode-map "M-g r" #'my/next-reference-or-label)
+(keymap-set org-mode-map "M-g R" #'my/previous-reference-or-label)
+
+(defvar-keymap my/TeX-ref-map
+  :repeat t
+  "r" #'my/next-reference-or-label
+  "R" #'my/previous-reference-or-label
+  )
+
+(cl-defmethod xref-backend-identifier-at-point ((_backend (eql reftex)))
+  (when (looking-back "\\\\\\(?:page\\|eq\\|auto\\|c\\)?ref{[-a-zA-Z0-9_*.:]*"
+                      (line-beginning-position))
+    (reftex-this-word "-a-zA-Z0-9_*.:")))
+
+(cl-defmethod xref-backend-definitions ((_backend (eql reftex)) prompt)
+  (unless (symbol-value reftex-docstruct-symbol) (reftex-parse-one))
+  (when-let* ((docstruct (symbol-value reftex-docstruct-symbol))
+              (data (assoc prompt docstruct))
+              (label (nth 0 data))
+              (file (nth 3 data))
+              (buffer (or (find-buffer-visiting file)
+                          (reftex-get-file-buffer-force
+                           file (not reftex-keep-temporary-buffers))))
+              (re (format reftex-find-label-regexp-format (regexp-quote label)))
+              (found (with-current-buffer buffer
+                       (or (re-search-backward re nil t)
+                           (progn (goto-char (point-min))
+                                  (re-search-forward
+                                   (format reftex-find-label-regexp-format2
+                                           (regexp-quote label))
+                                   nil t))))))
+    (list (xref-make prompt (xref-make-buffer-location
+                             buffer found)))))
 
 ;; Set priority range from A to C with default A
 (setq org-highest-priority ?A
@@ -75,4 +166,5 @@
 (customize-set-variable 'org-agenda-skip-deadline-if-done t)
 
 ;;;###autoload
-(defun my/org-agenda-setup ())
+(defun my/org-agenda-setup ()
+  (Tex-fold-mode))
