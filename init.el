@@ -171,6 +171,7 @@
 (require 'core/auto)
 
 (require 'core/appearance)
+(require 'core/filter)
 (require 'core/window)
 (require 'core/completion)
 (require 'core/minibuffer)
