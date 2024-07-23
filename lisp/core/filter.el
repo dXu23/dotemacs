@@ -7,8 +7,9 @@
 ;;; Code:
 
 (customize-set-variable 'avy-case-fold-search nil)
+
+(avy-setup-default)
 (keymap-global-set "C-;" #'avy-goto-char-2)
-(keymap-global-set "C-'" #'avy-goto-line)
 (keymap-global-set "M-g c" #'avy-goto-char)
 (keymap-global-set "M-g e" #'avy-goto-word-0)
 (keymap-global-set "M-g g" #'avy-goto-line)
@@ -87,7 +88,7 @@
    (cdr (ring-ref avy-ring 0)))
   t)
 
-(setf (alist-get ?H avy-dispatch-alist) #'avy-action-helpful)
+(setf (alist-get ?H avy-dispatch-alist) #'my/avy-action-helpful)
 
 (defun my/avy-action-embark (pt)
   (unwind-protect
