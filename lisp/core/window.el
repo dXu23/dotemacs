@@ -1,3 +1,5 @@
+(windmove-default-keybindings)
+
 ;; Windmove map
 (defvar windmove-repeat-map
   (let ((map (make-sparse-keymap)))
@@ -19,5 +21,25 @@
 
 ;; Winner mode
 (winner-mode 1)
+
+(advice-add 'other-window :before
+            (defun my/other-window-split-if-single (&rest _)
+              "Split the frame if there is a single window."
+              (when (one-window-p) (split-window-sensibly))))
+
+(defalias 'other-window-alternating
+  (let ((direction 1))
+    (lambda (&optional arg)
+      "Call `other-window', switching directions each time."
+      (interactive)
+      (if (equal last-command 'other-window-alternating)
+          (other-window (* direction (or arg 1)))
+        (setq direction (- direction))
+        (other-window (* direction (or arg 1)))))))
+
+(keymap-global-set "M-o" 'other-window-alternating)
+
+(put 'other-window-alternating 'repeat-map 'other-window-repeat-map)
+(keymap-set other-window-repeat-map "o" 'other-window-alternating)
 
 (provide 'core/window)
