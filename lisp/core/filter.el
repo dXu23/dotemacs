@@ -14,8 +14,6 @@
 (keymap-global-set "M-g e" #'avy-goto-word-0)
 (keymap-global-set "M-g g" #'avy-goto-line)
 (keymap-global-set "M-g w" #'avy-goto-word-1)
-(keymap-global-set "M-g (" #'avy-goto-open-paren)
-(keymap-global-set "M-g )" #'avy-goto-close-paren)
 (keymap-global-set "M-g t" #'avy-goto-char-timer)
 (keymap-global-set "M-g P" #'avy-pop-mark)
 
@@ -57,7 +55,7 @@
       (alist-get ?Y avy-dispatch-alist) #'my/avy-action-yank-whole-line)
 
 (defun my/avy-action-teleport-whole-line (pt)
-  (avy-action-kill-whole-line pt)
+  (my/avy-action-kill-whole-line pt)
   (save-excursion (yank)) t)
 
 (setf (alist-get ?t avy-dispatch-alist) #'avy-action-teleport

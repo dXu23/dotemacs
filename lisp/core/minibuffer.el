@@ -7,10 +7,10 @@
 (customize-set-variable 'vertico-resize t)
 (customize-set-variable 'vertico-cycle nil)
 
-(define-key vertico-map (kbd "<tab>") #'vertico-insert)
-(define-key vertico-map (kbd "<escape>") #'minibuffer-keyboard-quit)
-(define-key vertico-map (kbd "C-M-n") #'vertico-next-group)
-(define-key vertico-map (kbd "C-M-p") #'vertico-previous-group)
+(keymap-set vertico-map "<tab>" #'vertico-insert)
+(keymap-set vertico-map "<escape>" #'minibuffer-keyboard-quit)
+(keymap-set vertico-map "C-M-n" #'vertico-next-group)
+(keymap-set vertico-map "C-M-p" #'vertico-previous-group)
 
 ;;; Vertico extensions
 
@@ -47,9 +47,9 @@
 ;;;; Vertico directory
 (require 'vertico-directory)
 
-(define-key vertico-map (kbd "<backspace>") #'vertico-directory-delete-char)
-(define-key vertico-map (kbd "C-<backspace>") #'vertico-directory-delete-word)
-(define-key vertico-map (kbd "RET") #'vertico-directory-enter)
+(keymap-set vertico-map "<backspace>" #'vertico-directory-delete-char)
+(keymap-set vertico-map "C-<backspace>" #'vertico-directory-delete-word)
+(keymap-set vertico-map "RET" #'vertico-directory-enter)
 
 ;;;; Vertico unobtrusive
 (require 'vertico-unobtrusive)
@@ -62,23 +62,23 @@
 ;;			  (library reverse indexed)
 ;;			  (t reverse)))
 
-(define-key vertico-map (kbd "M-G") #'vertico-multiform-grid)
-(define-key vertico-map (kbd "M-F") #'vertico-multiform-flat)
-(define-key vertico-map (kbd "M-R") #'vertico-multiform-reverse)
-(define-key vertico-map (kbd "M-U") #'vertico-multiform-unobtrusive)
+(keymap-set vertico-map "M-G" #'vertico-multiform-grid)
+(keymap-set vertico-map "M-F" #'vertico-multiform-flat)
+(keymap-set vertico-map "M-R" #'vertico-multiform-reverse)
+(keymap-set vertico-map "M-U" #'vertico-multiform-unobtrusive)
 
 ;;;; Vertico miscellaneous settings
 (add-hook 'rfn-eshadow-update-overlay #'vertico-directory-tidy)
 (add-hook 'minibuffer-setup #'vertico-repeat-save)
 
 (advice-add #'vertico--format-candidate :around
-	    (lambda (orig cand prefix suffix index _start)
-	      (setq cand (funcall orig cand prefix suffix index _start))
-	      (concat
-	       (if (= vertico--index index)
-		   (propertize "» " 'face 'vertico-current)
-		 "  ")
-	       cand)))
+            (lambda (orig cand prefix suffix index _start)
+              (setq cand (funcall orig cand prefix suffix index _start))
+              (concat
+               (if (= vertico--index index)
+                   (propertize "» " 'face 'vertico-current)
+                 "  ")
+               cand)))
 
 (vertico-mode)
 (vertico-multiform-mode)
@@ -86,7 +86,7 @@
 ;;; Marginalia configuration
 (require 'marginalia)
 
-(define-key minibuffer-local-map (kbd "M-a") 'marginalia-cycle)
+(keymap-set minibuffer-local-map "M-a" 'marginalia-cycle)
 (customize-set-variable 'marginalia-max-relative-age 0)
 (customize-set-variable 'marginalia-align 'right)
 
@@ -103,12 +103,12 @@
 (customize-set-variable 'completion-styles '(orderless))
 (customize-set-variable 'customize-category-defaults nil)
 (customize-set-variable 'customize-category-overrides
-			'((file (styles basic-remote orderless))))
+                        '((file (styles basic-remote orderless))))
 
 (customize-set-variable 'orderless-style-dispatchers
-			'(prot-orderless-literal-dispatcher
-			  prot-orderless-strict-initialism-dispatcher
-			  prot-orderless-flex-dispatcher))
+                        '(prot-orderless-literal-dispatcher
+                          prot-orderless-strict-initialism-dispatcher
+                          prot-orderless-flex-dispatcher))
 
 (defun orderless--strict-*-initialism (component &optional anchored)
   "Match a COMPONENT as a strict initialism, optionally ANCHORED.
@@ -161,14 +161,14 @@ parses its input."
 (require 'consult)
 (require 'consult-register)
 
-(global-set-key (kbd "C-x b") #'consult-buffer)
-(global-set-key (kbd "C-x 4 b") #'consult-buffer-other-window)
-(global-set-key (kbd "C-x 5 b") #'consult-buffer-other-frame)
-(global-set-key (kbd "C-x r b") #'consult-bookmark)
-(global-set-key (kbd "C-x p b") #'consult-project-buffer)
-(global-set-key (kbd "M-y") #'consult-yank-pop)
-(global-set-key (kbd "M-g g") #'consult-goto-line)
-(global-set-key (kbd "M-g i") #'consult-imenu)
+(keymap-global-set "C-x b" #'consult-buffer)
+(keymap-global-set "C-x 4 b" #'consult-buffer-other-window)
+(keymap-global-set "C-x 5 b" #'consult-buffer-other-frame)
+(keymap-global-set "C-x r b" #'consult-bookmark)
+(keymap-global-set "C-x p b" #'consult-project-buffer)
+(keymap-global-set "M-y" #'consult-yank-pop)
+(keymap-global-set "M-g g" #'consult-goto-line)
+(keymap-global-set "M-g i" #'consult-imenu)
 
 (setq register-preview-delay 0.5
       register-preview-function #'consult-register-format)
@@ -179,3 +179,10 @@ parses its input."
       xref-show-definitions-function #'consult-xref)
 
 (provide 'core/minibuffer)
+
+;;; core/minibuffer.el ends here
+;;
+;; Local Variables:
+;; outline-regexp: ";;;\\(;* [^ \t\n]\\|###autoload\\)"
+;; eval: (outline-minor-mode 1)
+;; End:

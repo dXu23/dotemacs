@@ -9,6 +9,7 @@
                           "https://planet.emacslife.com/atom.xml"
                           "https://karthinks.com/software/index.xml"
                           "https://www.nayuki.io/rss20.xml"
+                          "https://dannyda.com/feed"
                           ))
 
 (customize-set-variable 'elfeed-show-entry #'my/elfeed-display-buffer)
