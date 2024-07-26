@@ -37,15 +37,15 @@
 (defun my/avy-action-copy-whole-line (pt)
   (save-excursion
     (goto-char pt)
-    (pcase-let (('(,start . ,end) (bounds-of-thing-at-point 'line)))
+    (pcase-let ((`(,start . ,end) (bounds-of-thing-at-point 'line)))
       (copy-region-as-kill start end)))
   (select-window
    (cdr
     (ring-ref avy-ring 0)))
   t)
 
-(defun avy-action-yank-whole-line (pt)
-  (avy-action-copy-whole-line pt)
+(defun my/avy-action-yank-whole-line (pt)
+  (my/avy-action-copy-whole-line pt)
   (save-excursion (yank))
   t)
 

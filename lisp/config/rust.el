@@ -17,6 +17,7 @@
 
 (setq rustic-format-on-save t)
 
+
 (defun my/rustic-mode-hook ()
   (when buffer-file-name
     (setq-local buffer-save-without-query t))
@@ -26,5 +27,6 @@
 
 ;;;###autoload
 (defun my/rust-setup ()
+  (yas-minor-mode)
   (lsp-deferred)
   )

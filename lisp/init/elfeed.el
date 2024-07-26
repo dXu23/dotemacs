@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;;
 
+(require 'elfeed)
+
 (customize-set-variable 'elfeed-feeds
                         '(
                           "https://nullprogram.com/feed"

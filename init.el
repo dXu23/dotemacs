@@ -176,7 +176,6 @@
 (require 'core/completion)
 (require 'core/minibuffer)
 (require 'core/prog)
-(require 'core/non-builtin-modes)
 
 (require 'init/org)
 (require 'init/elfeed)
