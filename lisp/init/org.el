@@ -11,6 +11,7 @@
 ;; Website: <https://pragmaticemacs.wordpress.com>
 ;; Article: <https://pragmaticemacs.wordpress.com/2015/12/08/org-mode-basics-vii-a-todo-list-with-schedules-and-deadlines/>
 ;;
+;;
 
 ;;; Requires
 (require 'cl-lib)
@@ -238,7 +239,7 @@ are a subset of its tags"
 (defun my/org-roam-find-by-tags (tags)
   "Filters by tags"
   (interactive
-   (list (let ((crm-separator "[        ]*:[    ]*"))
+   (list (let ((crm-separator "[ 	]*:[ 	]*"))
            (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
   (org-roam-node-find nil nil
                       (my/org-roam-filter-tag-fn tags)))

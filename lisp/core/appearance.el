@@ -37,7 +37,7 @@
         (t . (semilight 1.1)))
       modus-themes-scale-headings t)
 
-(load-theme 'modus-vivendi t)
+(load-theme 'modus-vivendi-tritanopia t)
 
 (set-face-attribute 'default nil :height 160)
 

@@ -251,9 +251,6 @@
 [submodule "sesman"]
         path = lib/sesman
         url = https://github.com/vspinu/sesman
-[submodule "slime"]
-        path = lib/slime
-        url = https://github.com/slime/slime
 [submodule "sly"]
         path = lib/sly
         url = https://github.com/joaotavora/sly

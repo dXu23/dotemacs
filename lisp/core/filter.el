@@ -17,7 +17,7 @@
 (keymap-global-set "M-g t" #'avy-goto-char-timer)
 (keymap-global-set "M-g P" #'avy-pop-mark)
 
-(customize-set-variable 'avy-keys '(?q ?e ?r ?y ?u ?o ?p
+(customize-set-variable 'avy-keys '(?q ?e ?r ?u ?o ?p
                                        ?a ?s ?d ?f ?g ?h ?j
                                        ?k ?l ?' ?x ?c ?v ?b
                                        ?n ?, ?/))
