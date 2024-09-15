@@ -1,3 +1,6 @@
+[submodule "ace-window"]
+        path = lib/ace-window
+        url = https://github.com/abo-abo/ace-window
 [submodule "aio"]
         path = lib/aio
         url = https://github.com/skeeto/emacs-aio
@@ -33,6 +36,9 @@
 [submodule "cape"]
         path = lib/cape
         url = https://github.com/minad/cape
+[submodule "capf-autosuggest"]
+        path = lib/capf-autosuggest
+        url = https://repo.or.cz/emacs-capf-autosuggest.git
 [submodule "cdlatex"]
         path = lib/cdlatex
         url = https://github.com/cdominik/cdlatex
@@ -54,9 +60,14 @@
 [submodule "consult"]
         path = lib/consult
         url = https://github.com/minad/consult
+[submodule "consult-dir"]
+        path = lib/consult-dir
+        url = https://github.com/karthink/consult-dir
 [submodule "corfu"]
         path = lib/corfu
         url = https://github.com/minad/corfu
+        load-path = .
+        load-path = extensions
 [submodule "dash"]
         path = lib/dash
         url = https://github.com/magnars/dash.el
@@ -133,9 +144,15 @@
 [submodule "hydra"]
         path = lib/hydra
         url = https://github.com/abo-abo/hydra
+[submodule "hyperbole"]
+        path = lib/hyperbole
+        url = git@github.com:emacsmirror/hyperbole.git
 [submodule "inf-ruby"]
         path = lib/inf-ruby
         url = https://github.com/nonsequitur/inf-ruby
+[submodule "js2-mode"]
+        path = lib/js2-mode
+        url = https://github.com/mooz/js2-mode
 [submodule "julia-mode"]
         path = lib/julia-mode
         url = https://github.com/JuliaEditorSupport/julia-emacs
@@ -239,6 +256,9 @@
 [submodule "restclient"]
         path = lib/restclient
         url = https://github.com/pashky/restclient.el
+[submodule "rjsx-mode"]
+        path = lib/rjsx-mode
+        url = https://github.com/felipeochoa/rjsx-mode
 [submodule "rust-mode"]
         path = lib/rust-mode
         url = https://github.com/rust-lang/rust-mode

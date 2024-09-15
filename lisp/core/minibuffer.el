@@ -3,22 +3,21 @@
 
 ;;; Vertico configuration
 (require 'vertico)
-(customize-set-variable 'vertico-count 13)
-(customize-set-variable 'vertico-resize t)
-(customize-set-variable 'vertico-cycle nil)
+(setopt vertico-count 13
+        vertico-resize t
+        vertico-cycle nil
+        vertico-sort-function #'vertico-sort-history-alpha)
 
 (keymap-set vertico-map "<tab>" #'vertico-insert)
 (keymap-set vertico-map "<escape>" #'minibuffer-keyboard-quit)
 (keymap-set vertico-map "C-M-n" #'vertico-next-group)
 (keymap-set vertico-map "C-M-p" #'vertico-previous-group)
 
-;;; Vertico extensions
+;;;; Vertico flat
+(require 'vertico-flat)
 
 ;;;; Vertico indexed
 (require 'vertico-indexed)
-
-;;;; Vertico flat
-(require 'vertico-flat)
 
 ;;;; Vertico grid
 (require 'vertico-grid)
@@ -100,10 +99,9 @@
 
 ;;; Orderless
 (require 'orderless)
-(customize-set-variable 'completion-styles '(orderless))
-(customize-set-variable 'customize-category-defaults nil)
-(customize-set-variable 'customize-category-overrides
-                        '((file (styles basic-remote orderless))))
+(setopt completion-styles '(orderless basic)
+        customize-category-defaults nil
+        customize-category-overrides '((file (styles basic-remote orderless))))
 
 (customize-set-variable 'orderless-style-dispatchers
                         '(prot-orderless-literal-dispatcher
@@ -170,13 +168,14 @@ parses its input."
 (keymap-global-set "M-g g" #'consult-goto-line)
 (keymap-global-set "M-g i" #'consult-imenu)
 
-(setq register-preview-delay 0.5
-      register-preview-function #'consult-register-format)
+(setopt register-preview-delay 0.5
+        register-preview-function #'consult-register-format)
 
 (advice-add #'register-preview :override #'consult-register-window)
 
-(setq xref-show-xrefs-function #'consult-xref
-      xref-show-definitions-function #'consult-xref)
+(setopt xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+
 
 (provide 'core/minibuffer)
 

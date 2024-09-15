@@ -1,11 +1,11 @@
 (require 'corfu)
 
-(define-key corfu-map (kbd "C-n") #'corfu-next)
-(define-key corfu-map (kbd "C-p") #'corfu-previous)
-(define-key corfu-map (kbd "<escape>") #'corfu-quit)
-(define-key corfu-map (kbd "<return>") #'corfu-insert)
-(define-key corfu-map (kbd "M-d") #'corfu-show-documentation)
-(define-key corfu-map (kbd "M-l") #'corfu-show-location)
+(keymap-set corfu-map "C-n" #'corfu-next)
+(keymap-set corfu-map "C-p" #'corfu-previous)
+(keymap-set corfu-map "<escape>" #'corfu-quit)
+(keymap-set corfu-map "<return>" #'corfu-insert)
+(keymap-set corfu-map "M-d" #'corfu-show-documentation)
+(keymap-set corfu-map "M-l" #'corfu-show-location)
 
 (global-corfu-mode)
 

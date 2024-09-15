@@ -1,3 +1,9 @@
+;;; appearance.el --- Appearance settings -*- lexical-binding: t; -*-
+
+;;; Commentary:
+;; appearance.el contains appearance settings
+;;
+
 ;; Get rid of all bars
 (if (fboundp 'menu-bar-mode)
     (tool-bar-mode -1))
@@ -9,33 +15,34 @@
     (scroll-bar-mode -1))
 
 ;;; load modus theme
-(setq modus-themes-mode-line '(accented borderless padded)
-      modus-themes-bold-constructs t
-      modus-themes-italic-constructs t
-      modus-themes-fringes 'subtle
-      modus-themes-tabs-accented t
-      modus-themes-paren-match '(bold intense)
-      modus-themes-prompts '(bold intense)
-      modus-themes-completions
-      '((matches . (extrabold))
-        (selection . (semibold italic text-also)))
-      modus-themes-org-blocks 'tinted-background
-      modus-themes-common-palete-overrides
-      '((date-deadline magenta-warmer)
-        (date-scheduled green-cooler)
-        (date-weekday fg-main)
-        (date-event fg-dim)
-        (date-now blue)
-        (prose-done fg-alt)
-        (prose-todo yellow))
-      modus-themes-region '(bg-only)
-      modus-themes-syntax '(alt-syntax)
-      modus-themes-headings
-      '((1 . (rainbow overline background 1.4))
-        (2 . (rainbow background 1.3))
-        (3 . (rainbow bold 1.2))
-        (t . (semilight 1.1)))
-      modus-themes-scale-headings t)
+(setopt modus-themes-mode-line '(accented borderless padded)
+        modus-themes-bold-constructs t
+        modus-themes-italic-constructs t
+        modus-themes-mixed-fonts t
+        modus-themes-fringes 'subtle
+        modus-themes-tabs-accented t
+        modus-themes-paren-match '(bold intense)
+        modus-themes-prompts '(bold intense)
+        modus-themes-completions
+        '((matches . (extrabold))
+          (selection . (semibold italic text-also)))
+        modus-themes-org-blocks 'tinted-background
+        modus-themes-common-palete-overrides
+        '((date-deadline magenta-warmer)
+          (date-scheduled green-cooler)
+          (date-weekday fg-main)
+          (date-event fg-dim)
+          (date-now blue)
+          (prose-done fg-alt)
+          (prose-todo yellow))
+        modus-themes-region '(bg-only)
+        modus-themes-syntax '(alt-syntax)
+        modus-themes-headings
+        '((1 . (rainbow overline background 1.4))
+          (2 . (rainbow background 1.3))
+          (3 . (rainbow bold 1.2))
+          (t . (semilight 1.1)))
+        modus-themes-scale-headings t)
 
 (load-theme 'modus-vivendi-tritanopia t)
 
@@ -179,4 +186,15 @@ Lastly, if no tabs are left in the window, it is deleted with the `delete-window
                  (ignore-errors (delete-window window)))))))
     (force-mode-line-update)))
 
+;;; split-width
+(setopt split-width-threshold 120
+        split-height-threshold nil)
+
 (provide 'core/appearance)
+
+;;; appearance.el ends here
+;;
+;; Local Variables:
+;; outline-regexp: ";;;\\(;* [^ \t\n]\\|###autoload\\)"
+;; eval: (outline-minor-mode 1)
+;; End:

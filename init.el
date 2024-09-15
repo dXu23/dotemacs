@@ -44,7 +44,7 @@
   (interactive)
   (find-file *emacs-init-file*))
 
-(global-set-key (kbd "C-c e") 'config-visit)
+(keymap-global-set "C-c e" #'config-visit)
 
 ;;; Reload config file
 (defun config-reload ()
@@ -52,12 +52,14 @@
   (interactive)
   (load *emacs-init-file*))
 
-(global-set-key (kbd "C-c r") 'config-reload)
+(keymap-global-set "C-c r" #'config-reload)
 
 ;;; Basic Settings
 (setq-default indent-tabs-mode nil)
 
-(setq inhibit-startup-message t)
+(customize-set-variable 'inhibit-startup-message t)
+
+(customize-set-variable 'use-short-answers t)
 
 (repeat-mode 1)
 
@@ -132,6 +134,7 @@
 (put 'upcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 (put 'scroll-right 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 ;;; Macro settings
 (require 'kmacro)
@@ -171,7 +174,9 @@
 (require 'core/auto)
 
 (require 'core/appearance)
+(require 'core/help)
 (require 'core/filter)
+(require 'core/action)
 (require 'core/window)
 (require 'core/completion)
 (require 'core/minibuffer)

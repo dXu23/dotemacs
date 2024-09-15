@@ -6,6 +6,9 @@
 
 ;;; Code:
 
+(require 'avy)
+(require 'embark)
+
 (customize-set-variable 'avy-case-fold-search nil)
 
 (avy-setup-default)
@@ -17,7 +20,7 @@
 (keymap-global-set "M-g t" #'avy-goto-char-timer)
 (keymap-global-set "M-g P" #'avy-pop-mark)
 
-(customize-set-variable 'avy-keys '(?q ?e ?r ?u ?o ?p
+(customize-set-variable 'avy-keys '(?q ?r ?u ?o ?p
                                        ?a ?s ?d ?f ?g ?h ?j
                                        ?k ?l ?' ?x ?c ?v ?b
                                        ?n ?, ?/))
@@ -89,6 +92,7 @@
 (setf (alist-get ?H avy-dispatch-alist) #'my/avy-action-helpful)
 
 (defun my/avy-action-embark (pt)
+  "Use Embark to act on the item at `pt'"
   (unwind-protect
       (save-excursion
         (goto-char pt)
@@ -98,6 +102,13 @@
   t)
 
 (setf (alist-get ?. avy-dispatch-alist) #'my/avy-action-embark)
+
+(defun my/avy-action-exchange (pt)
+  "Exchange sexp at `pt' with the one at point."
+  (set-mark pt)
+  (transpose-sexps 0))
+
+(setf (alist-get ?e avy-dispatch-alist) #'my/avy-action-exchange)
 
 (provide 'core/filter)
 

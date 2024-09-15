@@ -12,6 +12,8 @@
                           "https://karthinks.com/software/index.xml"
                           "https://www.nayuki.io/rss20.xml"
                           "https://dannyda.com/feed"
+                          "https://arcan-fe.com/feed/"
+                          "https://susam.net/feed.xml"
                           ))
 
 (customize-set-variable 'elfeed-show-entry #'my/elfeed-display-buffer)
@@ -120,7 +122,7 @@ search results, displaying entries without switching to them."
   (let ((browse-url-browser-function #'eww-browse-url))
     (elfeed-search-browse-url use-generic-p)))
 
-(customize-set-variable 'browse-url-browser-function
+(customize-set-variable 'browse-url-handlers
                         '(("https:\\/\\/www\\.youtu\\.*be." . my/browse-url-mpv)
                           ("." . browse-url-generic)))
 
