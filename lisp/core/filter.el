@@ -22,7 +22,7 @@
 
 (customize-set-variable 'avy-keys '(?q ?r ?u ?o ?p
                                        ?a ?s ?d ?f ?g ?h ?j
-                                       ?k ?l ?' ?x ?c ?v ?b
+                                       ?k ?l ?' ?c ?v ?b
                                        ?n ?, ?/))
 
 (defun my/avy-action-kill-whole-line (pt)

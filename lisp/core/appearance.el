@@ -54,10 +54,9 @@
 (require 'display-line-numbers)
 
 (defcustom display-line-numbers-exempt-modes
-  '(vterm-mode eshell-mode shell-mode inf-ruby-mode term-mode
-               ansi-term-mode help-mode paradox-mode comint-mode
-               inferior-emacs-lisp-mode pdf-view-mode
-               calc-keypad-mode)
+  '(vterm-mode eshell-mode shell-mode term-mode
+               special-mode paradox-mode comint-mode
+               pdf-view-mode calc-keypad-mode)
   "Major modes on which to disable line numbers."
   :group 'display-line-numbers
   :type 'list
@@ -67,7 +66,7 @@
   "Turn on line numbers except for certain major modes.
 Exempt modes are defined in `display-line-numbers-exempt-modes'."
   (unless (or (minibufferp)
-              (member major-mode display-line-numbers-exempt-modes))
+              (seq-contains display-line-numbers-exempt-modes major-mode #'derived-mode-p))
     (display-line-numbers-mode)))
 
 (global-display-line-numbers-mode 1)

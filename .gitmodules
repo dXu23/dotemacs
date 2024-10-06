@@ -182,6 +182,9 @@
 [submodule "markdown-mode"]
         path = lib/markdown-mode
         url = https://github.com/jrblevin/markdown-mode
+[submodule "media-files"]
+        path = lib/media-files
+        url = git@github.com:emacsattic/media-files.git
 [submodule "merlin"]
         path = lib/merlin
         url = git@github.com:emacsmirror/merlin.git
