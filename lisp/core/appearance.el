@@ -66,7 +66,7 @@
   "Turn on line numbers except for certain major modes.
 Exempt modes are defined in `display-line-numbers-exempt-modes'."
   (unless (or (minibufferp)
-              (seq-contains display-line-numbers-exempt-modes major-mode #'derived-mode-p))
+              (derived-mode-p display-line-numbers-exempt-modes))
     (display-line-numbers-mode)))
 
 (global-display-line-numbers-mode 1)
