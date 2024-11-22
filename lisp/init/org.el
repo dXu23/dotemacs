@@ -239,10 +239,57 @@ are a subset of its tags"
 (defun my/org-roam-find-by-tags (tags)
   "Filters by tags"
   (interactive
-   (list (let ((crm-separator "[ 	]*:[ 	]*"))
+   (list (let ((crm-separator "[        ]*:[    ]*"))
            (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
   (org-roam-node-find nil nil
                       (my/org-roam-filter-tag-fn tags)))
+
+(defun my/org-roam-tag-buffer (tags)
+  (interactive
+   (list (let ((crm-separator "[        ]*:[    ]*"))
+           (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
+  (let* ((tags-buffer-title (string-join tags " & "))
+         (tags-buffer-name (concat "*" tags-buffer-title "*")))
+    (with-current-buffer (get-buffer-create tags-buffer-name)
+      (org-mode)
+      (org-insert-heading 4 t t)
+      (insert tags-buffer-title "\n")
+      (pcase-dolist (`(,_ . ,node) (org-roam-node-read--completions (my/org-roam-filter-tag-fn tags)))
+        (let ((id (org-roam-node-id node))
+              (title (org-roam-node-title node))
+              (description (org-roam-node-formatted node))
+              (filetags (org-roam-node-tags node)))
+          (insert "** " title "\n")
+          (org-insert-property-drawer)
+          (org-set-property "ID" id)
+          (message "id: %s" id)
+          (org-set-property "filetags" (concat ":" (string-join filetags ":") ":"))))
+      (org-fold-show-all))))
+
+;; 來自 "https://takeonrules.com/2024/08/11/exporting-org-mode-elfeed-links/"
+(org-link-set-parameters "elfeed"
+  :follow #'elfeed-link-open
+  :store #'elfeed-link-store-link
+  :export #'elfeed-link-export-link)
+
+(defun elfeed-link-export-link (link desc format _protocol)
+  "Export `org-mode' `elfeed' LINK with DESC for FORMAT."
+  (if (string-match "\\([^#]+\\)#\\(.+\\)" link)
+      (if-let* ((entry
+                 (elfeed-db-get-entry
+                  (cons (match-string 1 link)
+                        (match-string 2 link))))
+                (url
+                 (elfeed-entry-link entry))
+                (title
+                 (elfeed-entry-title entry)))
+          (pcase format
+            ('html  (format "<a href=\"%s\">%s</a>" url desc))
+            ('md    (format "[%s](%s)" desc url))
+            ('latex (format "@uref{%s,%s}" url desc))
+            (_      (format "%s (%s)" desc url)))
+        (format "%s (%s)" desc url))
+    (format "%s (%s)" desc link)))
 
 ;;; Org-noter settings
 (org-noter-enable-org-roam-integration)

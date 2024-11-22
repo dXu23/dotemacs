@@ -3,6 +3,7 @@
 
 (require 'tex)
 (require 'latex)
+(require 'cdlatex)
 
 (require 'xref)
 (require 'reftex-ref)
@@ -143,6 +144,7 @@
   (org-bullets-mode)
   (auto-fill-mode)
   (prettify-symbols-mode)
+  (turn-on-org-cdlatex)
   (my/org-ispell))
 
 ;; Open org agenda in current window
@@ -164,6 +166,67 @@
 (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
 
 (customize-set-variable 'org-agenda-skip-deadline-if-done t)
+
+; Org Table Reference Functions
+;; (defun my/org-table-cell-at-point ()
+;;   "At point, return the cell object from an Org table.
+;;
+;; A cell object is defined to be a list containing the row and the column, successfully."
+;;   (if (not (org-at-table-p))
+;;       (error "Not in a table"))
+;;
+;;   (let* ((row (org-table-current-dline))
+;;          (col (org-table-current-column)))
+;;     (cons row col)))
+;;
+;; (defun my/format-org-table-field-reference (cell)
+;;   (pcase-let ('(row . col) cell))
+;;   (format "@%d$%d" row col))
+;;
+;; (defun my/org-table-range ()
+;;   "Return range object from a region defined within an Org table.
+;;
+;; A range object is a list of two cells computed via
+;; `my/org-table-cell-at-point', the first being the cell at the
+;; start of the region and the last being the cell at the end of the
+;; region."
+;;   (if (not (and (org-at-table-p)
+;;                 (use-region-p)))
+;;       (error "Not in an Org table"))
+;;
+;;   (save-excursion
+;;     (let* ((end (my/org-table-cell-at-point)))
+;;       (exchange-point-and-mark)
+;;       (let ((start (my/org-table-cell-at-point)))
+;;         (list start end)))))
+;;
+;; (defvar my/last-org-table-reference nil
+;;   "Last stored Org table reference.
+;;
+;; State variable to store an Org table reference (field or range)
+;; to be used in an Org table formula. This table is set via
+;; `my/org-table-reference-dwim'
+;;
+;; Note: This state variable to work-around lack of clarity on
+;; region and mouse menu insertion.")
+;;
+;; (defun my/org-table-reference-dwim ()
+;;   (if (not (org-at-table-p))
+;;       (error "Not in an Org table"))
+;;   (cond
+;;    ((use-region-p)
+;;     (pcase-let* ((range (my/org-table-range))
+;;                  (`(start . end) range)
+;;                  (msg (format "%s..%s"
+;;                               (my/format-org-table-field-reference start)
+;;                               (my/format-org-table-field-reference end))))
+;;       (setq my/last-org-table-reference (my/org-table-range-to-reference range))
+;;       msg))
+;;    (t
+;;     (let ((msg (my/format-org-table-field-reference
+;;                 (my/org-table-cell-at-point))))
+;;       (setq my/last-org-table-reference msg)
+;;       msg))))
 
 ;;;###autoload
 (defun my/org-agenda-setup ()

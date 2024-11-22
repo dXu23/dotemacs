@@ -56,7 +56,6 @@
 
 ;;; Basic Settings
 (setq-default indent-tabs-mode nil)
-
 (customize-set-variable 'inhibit-startup-message t)
 
 (customize-set-variable 'use-short-answers t)
@@ -135,6 +134,7 @@
 (put 'scroll-left 'disabled nil)
 (put 'scroll-right 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
 
 ;;; Macro settings
 (require 'kmacro)
@@ -171,16 +171,19 @@
 
 (customize-set-variable 'display-raw-bytes-as-hex t)
 
+(customize-set-variable 'browse-url-generic-program "/usr/bin/firefox")
+
 (require 'core/auto)
 
 (require 'core/appearance)
 (require 'core/help)
 (require 'core/filter)
-(require 'core/action)
 (require 'core/window)
+(require 'core/action)
 (require 'core/completion)
 (require 'core/minibuffer)
 (require 'core/prog)
+(require 'core/hyperbole)
 
 (require 'init/org)
 (require 'init/elfeed)
@@ -189,11 +192,10 @@
 (require 'hooks)
 (load "loaddefs" nil t)
 
-
-
 ;;; init.el ends here
 ;;
-;; Local Variables:
+
+ ;; Local Variables:
 ;; outline-regexp: ";;;\\(;* [^ \t\n]\\|###autoload\\)"
 ;; eval: (outline-minor-mode 1)
 ;; End:

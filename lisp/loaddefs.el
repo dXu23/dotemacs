@@ -32,7 +32,7 @@
 
 (autoload 'my/org-setup "config/org")
 (autoload 'my/org-agenda-setup "config/org")
-(register-definition-prefixes "config/org" '("my/org-ispell"))
+(register-definition-prefixes "config/org" '("my/"))
 
 
 ;;; Generated autoloads from config/scheme.el
@@ -94,18 +94,26 @@
 (autoload 'my/c-setup "config/c" "\
 Sets up Treesitter for C.")
 
-
 
 ;;; Generated autoloads from config/eshell.el
 
 (autoload 'my/eshell-setup "config/eshell")
-
 
 
 ;;; Generated autoloads from config/julia.el
 
 (autoload 'my/julia-setup "config/julia" "\
 Sets up Julia")
+
+
+;;; Generated autoloads from config/calc.el
+
+(autoload 'my/calc-setup "config/calc")
+
+
+;;; Generated autoloads from config/react.el
+
+(autoload 'my/react-setup "config/react")
 
 ;;; End of scraped data
 

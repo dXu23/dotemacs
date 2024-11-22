@@ -1,3 +1,6 @@
+[submodule "ESS"]
+        path = lib/ESS
+        url = https://github.com/emacs-ess/ESS
 [submodule "ace-window"]
         path = lib/ace-window
         url = https://github.com/abo-abo/ace-window
@@ -10,6 +13,12 @@
 [submodule "all-the-icons-completion"]
         path = lib/all-the-icons-completion
         url = https://github.com/iyefrat/all-the-icons-completion
+[submodule "anki-editor"]
+        path = lib/anki-editor
+        url = https://github.com/louietan/anki-editor
+[submodule "async"]
+        path = lib/async
+        url = git@github.com:jwiegley/emacs-async.git
 [submodule "auctex"]
         path = lib/auctex
         url = https://git.savannah.gnu.org/git/auctex.git
@@ -74,6 +83,9 @@
 [submodule "deferred"]
         path = lib/deferred
         url = https://github.com/kiwanami/emacs-deferred
+[submodule "denote"]
+        path = lib/denote
+        url = git@github.com:emacsmirror/denote.git
 [submodule "djvu"]
         path = lib/djvu
         url = git@github.com:emacsmirror/djvu.git
@@ -114,6 +126,9 @@
 [submodule "flycheck-ocaml"]
         path = lib/flycheck-ocaml
         url = https://github.com/flycheck/flycheck-ocaml
+[submodule "focus"]
+        path = lib/focus
+        url = https://github.com/larstvei/Focus
 [submodule "geiser"]
         path = lib/geiser
         url = https://gitlab.com/emacs-geiser/geiser
@@ -129,6 +144,9 @@
 [submodule "gnuplot-mode"]
         path = lib/gnuplot-mode
         url = https://github.com/mkmcc/gnuplot-mode
+[submodule "go-translate"]
+        path = lib/go-translate
+        url = https://github.com/lorniu/go-translate
 [submodule "gptel"]
         path = lib/gptel
         url = https://github.com/karthink/gptel
@@ -150,6 +168,9 @@
 [submodule "inf-ruby"]
         path = lib/inf-ruby
         url = https://github.com/nonsequitur/inf-ruby
+[submodule "jieba"]
+        path = lib/jieba
+        url = https://github.com/kisaragi-hiu/emacs-jieba.git
 [submodule "js2-mode"]
         path = lib/js2-mode
         url = https://github.com/mooz/js2-mode
@@ -197,6 +218,9 @@
 [submodule "nov"]
         path = lib/nov
         url = https://depp.brause.cc/nov.el.git
+[submodule "olivetti"]
+        path = lib/olivetti
+        url = https://github.com/rnkn/olivetti
 [submodule "orderless"]
         path = lib/orderless
         url = https://github.com/oantolin/orderless
@@ -232,6 +256,9 @@
 [submodule "parseedn"]
         path = lib/parseedn
         url = https://github.com/clojure-emacs/parseedn
+[submodule "paw"]
+        path = lib/paw
+        url = https://github.com/chenyanming/paw.git
 [submodule "pdf-tools"]
         path = lib/pdf-tools
         url = https://github.com/vedang/pdf-tools
@@ -247,12 +274,27 @@
 [submodule "pikchr-mode"]
         path = lib/pikchr-mode
         url = https://github.com/kljohann/pikchr-mode
+[submodule "pyim"]
+        path = lib/pyim
+        url = https://github.com/tumashu/pyim
+[submodule "pyim-basedict"]
+        path = lib/pyim-basedict
+        url = https://github.com/tumashu/pyim-basedict
+[submodule "pyim-cangjiedict"]
+        path = lib/pyim-cangjiedict
+        url = https://github.com/con5tella/pyim-cangjiedict
+[submodule "pyim-wbdict"]
+        path = lib/pyim-wbdict
+        url = https://github.com/tumashu/pyim-wbdict
 [submodule "queue"]
         path = lib/queue
         url = git@github.com:emacsmirror/queue.git
 [submodule "racket-mode"]
         path = lib/racket-mode
         url = https://github.com/greghendershott/racket-mode
+[submodule "ready-player"]
+        path = lib/ready-player
+        url = https://github.com/xenodium/ready-player.git
 [submodule "request"]
         path = lib/request
         url = https://github.com/tkf/emacs-request
@@ -280,6 +322,9 @@
 [submodule "spinner"]
         path = lib/spinner
         url = https://github.com/Malabarba/spinner.el
+[submodule "svg-lib"]
+        path = lib/svg-lib
+        url = https://github.com/rougier/svg-lib
 [submodule "tablist"]
         path = lib/tablist
         url = https://github.com/emacsorphanage/tablist
@@ -309,6 +354,9 @@
 [submodule "with-editor"]
         path = lib/with-editor
         url = https://github.com/magit/with-editor
+[submodule "xr"]
+        path = lib/xr
+        url = https://github.com/mattiase/xr
 [submodule "xterm-color"]
         path = lib/xterm-color
         url = https://github.com/atomontage/xterm-color

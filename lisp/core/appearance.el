@@ -56,7 +56,7 @@
 (defcustom display-line-numbers-exempt-modes
   '(vterm-mode eshell-mode shell-mode term-mode
                special-mode paradox-mode comint-mode
-               pdf-view-mode calc-keypad-mode)
+               pdf-view-mode calc-keypad-mode elfeed-show-mode)
   "Major modes on which to disable line numbers."
   :group 'display-line-numbers
   :type 'list

@@ -50,6 +50,4 @@ If called with a single \\[universal-argument], just call
   (prettify-symbols-mode)
   )
 
-
-
 (provide 'config/latex)

@@ -1,4 +1,4 @@
-;;; elfeed.el --- Elfeed customization
+;;; elfeed.el --- Elfeed customization -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;
@@ -8,6 +8,10 @@
 (customize-set-variable 'elfeed-feeds
                         '(
                           "https://nullprogram.com/feed"
+                          "https://grass.show/index.xml"
+                          "https://tilde.town/~ramin_hal9001/atom.xml"
+                          "https://rss.lilydjwg.me/zhihuzhuanlan/FrontendMagazine"
+                          "http://francesfu.blogspot.com/feeds/posts/default?alt=rss"
                           "https://planet.emacslife.com/atom.xml"
                           "https://karthinks.com/software/index.xml"
                           "https://www.nayuki.io/rss20.xml"
@@ -24,7 +28,6 @@
   (set-window-text-height (get-buffer-window) (round (* 0.7 (frame-height)))))
 
 
-;; -*- lexical-binding: t -*-
 (defun my/elfeed-search-show-entry-pre (&optional lines)
   "Returns a function to scroll forward or backward in the Elfeed
 search results, displaying entries without switching to them."

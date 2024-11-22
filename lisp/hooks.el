@@ -10,6 +10,7 @@
 (add-hook 'latex-mode-hook #'my/latex-setup)
 (add-hook 'eshell-mode-hook #'my/eshell-setup)
 (add-hook 'julia-mode-hook #'my/julia-setup)
+(add-hook 'calc-mode-hook #'my/calc-setup)
 
 ;; cperl mode is better than perl
 (add-hook 'perl-mode-hook #'my/perl-setup)

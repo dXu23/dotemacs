@@ -1,3 +1,5 @@
+;;; window.el --- Settings for Emacs window management -*- lexical-binding: t; -*-
+
 (windmove-default-keybindings)
 
 ;; Windmove map

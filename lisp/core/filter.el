@@ -21,11 +21,12 @@
 (keymap-global-set "M-g P" #'avy-pop-mark)
 
 (customize-set-variable 'avy-keys '(?q ?r ?u ?o ?p
-                                       ?a ?s ?d ?f ?g ?h ?j
-                                       ?k ?l ?' ?c ?v ?b
-                                       ?n ?, ?/))
+                                    ?a ?s ?d ?f ?g ?h ?j
+                                    ?k ?l ?' ?c ?v ?b
+                                    ?n ?, ?/))
 
 (defun my/avy-action-kill-whole-line (pt)
+  "Kills whole line that `PT' is on and pushes mark to avy-ring."
   (save-excursion
     (goto-char pt)
     (kill-whole-line))
