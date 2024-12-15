@@ -36,6 +36,9 @@
 [submodule "avy"]
         path = lib/avy
         url = https://github.com/abo-abo/avy
+[submodule "biblio"]
+        path = lib/biblio
+        url = https://github.com/cpitclaudel/biblio.el
 [submodule "borg"]
         path = lib/borg
         url = git@github.com:emacscollective/borg.git
@@ -86,6 +89,9 @@
 [submodule "denote"]
         path = lib/denote
         url = git@github.com:emacsmirror/denote.git
+[submodule "denote-explore"]
+        path = lib/denote-explore
+        url = https://github.com/pprevos/denote-explore
 [submodule "djvu"]
         path = lib/djvu
         url = git@github.com:emacsmirror/djvu.git
@@ -98,6 +104,9 @@
 [submodule "eat"]
         path = lib/eat
         url = https://codeberg.org/akib/emacs-eat.git
+[submodule "eev"]
+        path = lib/eev
+        url = https://github.com/edrx/eev
 [submodule "elfeed"]
         path = lib/elfeed
         url = https://github.com/skeeto/elfeed
@@ -203,6 +212,9 @@
 [submodule "markdown-mode"]
         path = lib/markdown-mode
         url = https://github.com/jrblevin/markdown-mode
+[submodule "maxima"]
+        path = lib/maxima
+        url = https://gitlab.com/sasanidas/maxima
 [submodule "media-files"]
         path = lib/media-files
         url = git@github.com:emacsattic/media-files.git
@@ -274,6 +286,9 @@
 [submodule "pikchr-mode"]
         path = lib/pikchr-mode
         url = https://github.com/kljohann/pikchr-mode
+[submodule "pyenv-mode"]
+        path = lib/pyenv-mode
+        url = https://github.com/pythonic-emacs/pyenv-mode
 [submodule "pyim"]
         path = lib/pyim
         url = https://github.com/tumashu/pyim
@@ -286,6 +301,9 @@
 [submodule "pyim-wbdict"]
         path = lib/pyim-wbdict
         url = https://github.com/tumashu/pyim-wbdict
+[submodule "pythonic"]
+        path = lib/pythonic
+        url = https://github.com/pythonic-emacs/pythonic
 [submodule "queue"]
         path = lib/queue
         url = git@github.com:emacsmirror/queue.git

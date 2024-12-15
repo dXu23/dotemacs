@@ -22,33 +22,76 @@
 (require 'org-protocol)
 (require 'org-noter)
 
-(require 'vulpea)
-(require 'org-roam)
-(require 'org-roam-dailies)
-
-(require 'lib/vulpea)
-(require 'lib/vulpea-agenda)
-(require 'lib/vulpea-capture)
+(require 'denote)
+(require 'denote-journal-extras)
+(require 'elfeed)
 
 (defvar *org-root* "~/Documents/org")
 
-;;; Agenda Settings
-
 ;;;; Org Directory
 (customize-set-variable 'org-directory *org-root*)
-(customize-set-variable 'org-roam-directory *org-root*)
-(setq vulpea-directory *org-root*)
+(customize-set-variable 'denote-directory (expand-file-name "zettel" *org-root*))
 
-
-(add-hook 'org-roam-db-autosync-mode-hook #'vulpea-db-autosync-enable)
 ;;;; Disables inheritance for project tags
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 
-(setq org-agenda-prefix-format
-      '((agenda . " %i %(my/vulpea-agenda-category 12)%?-12t% s")
-        (todo . " %i %(my/vulpea-agenda-category 12) ")
-        (tags . " %i %(my/vulpea-agenda-category 12) ")
-        (search . " %i %(my/vulpea-agenda-category 12) ")))
+(customize-set-variable 'org-default-notes-file (expand-file-name "inbox.org" org-directory))
+(customize-set-variable 'org-agenda-files (list org-default-notes-file "agenda.org"
+                                                "notes.org" "projects.org"))
+
+(customize-set-variable 'denote-journal-extras-directory "journal")
+
+(customize-set-variable 'org-capture-templates
+                        `(("t" "New task [inbox]" entry
+                           (file+headline org-default-notes-file "Tasks")
+                           ,(concat "* TODO [#A] %i%?\n"
+                                    "SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n"))
+                          ("@" "Inbox [mu4e]" entry
+                           (file+headline org-default-notes-file "Tasks")
+                           ,(concat "* TODO Reply \"%a\" %?\n"
+                                    "/Entered on/ %U"))
+                          ("f" "Fleeting note [inbox]" item
+                           (file+headline org-default-notes-file "Notes")
+                           "- %?")
+                          ("p" "Permanent note" plain
+                           (file denote-last-path)
+                           (function
+                            (lambda ()
+                              (let ((denote-directory (expand-file-name "zettel/" org-directory)))
+                                (denote-org-capture))))
+                           :no-save t
+                           :immediate-finish nil
+                           :kill-buffer t
+                           :jump-to-captured t)
+                          ("j" "Journal" entry
+                           (file denote-last-path)
+                           (function
+                            (lambda ()
+                              ;; The "journal" subdirectory of the `denote-directory'---this must exist!
+                              (let* ((denote-use-directory (expand-file-name "journal" org-directory))
+                                     ;; Use the existing `denote-prompts' as well as the one for a date.
+                                     (denote-prompts (denote-add-prompts '(date))))
+                                (denote-org-capture))))
+                           :no-save t
+                           :immediate-finish nil
+                           :kill-buffer t
+                           :jump-to-captured t)
+                          ("T" "Tickler" entry
+                           (file+headline "tickler.org" "Tickler")
+                           "* %i%? \n %U")
+                          ("p" "Protocol" entry
+                           (file+headline "refile.org" "Notes")
+                           ,(concat "* %:description :RESEARCH:\n"
+                                    "#+BEGIN_QUOTE\n"
+                                    "%i\n\n -- %:link %u\n"
+                                    "#+END_QUOTE\n\n%?"))
+                          ("L" "Protocol Link" entry
+                           (file+headline "refile.org" "Notes")
+                           "* %? [[%:link][%:description]] \nCaptured On: %u")
+                          ("m" "Meeting" entry (file+headline "agenda.org" "Future")
+                           ,(concat "* %? :meeting:\n"
+                                    "<%<%Y-%m-%d %a %H:00>>")
+                           )))
 
 (setq org-agenda-custom-commands
       '(("g" "Get Things Done (GTD)"
@@ -85,42 +128,12 @@
 
 (setq org-agenda-hide-tags-regexp ".")
 
-(add-hook 'find-file-hook #'my/vulpea-project-update-tag)
-(add-hook 'before-save-hook #'my/vulpea-project-update-tag)
-
-(advice-add 'org-agenda :before #'my/vulpea-agenda-files-update)
-(advice-add 'org-todo-list :before #'my/vulpea-agenda-files-update)
-
-(setq org-capture-templates `(("t" "Todo [inbox]" entry
-                               (file+headline "inbox.org" "Tasks")
-                               ,(concat "* TODO [#A] %i%?\n"
-                                        "SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n"))
-                              ("T" "Tickler" entry
-                               (file+headline "tickler.org" "Tickler")
-                               "* %i%? \n %U")
-                              ("p" "Protocol" entry
-                               (file+headline "refile.org" "Notes")
-                               ,(concat "* %:description :RESEARCH:\n"
-                                        "#+BEGIN_QUOTE\n"
-                                        "%i\n\n -- %:link %u\n"
-                                        "#+END_QUOTE\n\n%?"))
-                              ("L" "Protocol Link" entry
-                               (file+headline "refile.org" "Notes")
-                               "* %? [[%:link][%:description]] \nCaptured On: %u")
-                              ("@" "Inbox [mu4e]" entry (file "inbox.org")
-                               ,(concat "* TODO Process \"%a\" %?\n"
-                                        "/Entered on/ %U"))
-                              ("m" "Meeting" entry
-                               (function my/vulpea-capture-meeting-target)
-                               (function my/vulpea-capture-meeting-template))))
-
-
 (setq org-deadline-string "DUE:")
 (setq org-scheduled-string "SCHEDULED:")
 
 ;; Capture functions
 (defun org-capture-meeting ()
-  "Caputre a meeting."
+  "Capture a meeting."
   (interactive)
   (org-capture nil "m"))
 
@@ -139,10 +152,21 @@
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 
 ;;; Org mode keybindings
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c b") 'org-switchb)
+(keymap-global-set "C-c l" #'org-store-link)
+(keymap-global-set "C-c a" #'org-agenda)
+(keymap-global-set "C-c c" #'org-capture)
+(keymap-global-set "C-c b" #'org-switchb)
+
+(keymap-global-set "C-c n n" #'denote)
+(keymap-global-set "C-c n N" #'denote-type)
+(keymap-global-set "C-c n o" #'denote-sort-dired)
+(keymap-global-set "C-c n r" #'denote-rename-file)
+
+(keymap-set text-mode-map "C-c n i" #'denote-link)
+(keymap-set text-mode-map "C-c n I" #'denote-add-links)
+(keymap-set text-mode-map "C-c n b" #'denote-backlinks)
+
+; (keymap-set org-mode-map "C-c n d l" #'denote-org-extras-dbl)
 
 ;;; Refiling
 (customize-set-variable 'org-refile-use-outline-path 'file)
@@ -183,88 +207,25 @@ See also `org-save-all-org-buffers'"
 
 (add-hook 'org-after-todo-state-change-hook #'log-todo-next-creation-date)
 
-(add-hook 'vulpea-insert-handle-functions
-          #'my/vulpea-insert-handle)
 
 ;;; Basic Org Settings
 (customize-set-variable 'org-protocol-default-template-key "1")
 (customize-set-variable 'org-enforce-todo-dependencies t)
 
-;;; Org Roam Settings
-(setq org-roam-v2-ack t)
-(with-eval-after-load 'org-roam
-  (org-roam-db-autosync-enable))
-
-(customize-set-variable 'org-roam-completion-everywhere t)
-
-(customize-set-variable 'org-roam-dailies-caputre-templates
-                        '(("d" "default" entry "* %<%I:%M %p>: %?"
-                           :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-;;;; Keybindings
-(keymap-global-set "C-c n l" 'org-roam-buffer-toggle)
-(keymap-global-set "C-c n f" 'org-roam-node-find)
-(keymap-global-set "C-c n v" 'org-roam-node-visit)
-(keymap-global-set "C-c n i" 'org-roam-node-insert)
-(keymap-global-set "C-c q" 'org-roam-add)
-(keymap-set org-mode-map "C-M-i" 'completion-at-point)
-
-(customize-set-variable 'org-roam-node-display-template (concat "${title:*}" (propertize "${tags:10}" 'face 'org-tag)))
-
-(defun my/org-roam-insert-image ()
-  "Select and insert an image at point."
-  (interactive)
-  (let* ((file-name (format "%s-%s.png"
-                            (file-name-sans-extension (buffer-name))
-                            (random (expt 2 31))))
-         (path (format "%s/%s/%s" org-roam-directory "images" file-name)))
-    ;; The mouse movement via xdotool is needed because otherwise, if
-    ;; unclutter is active, the pointer will remain idden.
-    (call-process "xdotool" nil 0 nil "mousemove_relative" "--" "-1" "0")
-    (let ((scrot-exit (call-process "scrot" nil nil nil
-                                     "-z" "-f" "-s" "--file" path)))
-      (when (= scrot-exit 0)
-        (insert (format "[[../images/%s]]" file-name))))))
-
-(keymap-set org-roam-dailies-map "Y" 'org-roam-dailies-capture-yesterday)
-(keymap-set org-roam-dailies-map "T" 'org-roam-dailies-capture-tomorrow)
-
-(keymap-set global-map "C-c n d" 'org-roam-dailies-map)
-
-(defun my/org-roam-filter-tag-fn (tag-names)
-  "Returns a function that filters a node if its `tag-names'
-are a subset of its tags"
-  (lambda (node)
-    (cl-subsetp tag-names (org-roam-node-tags node))))
-
-(defun my/org-roam-find-by-tags (tags)
-  "Filters by tags"
-  (interactive
-   (list (let ((crm-separator "[        ]*:[    ]*"))
-           (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
-  (org-roam-node-find nil nil
-                      (my/org-roam-filter-tag-fn tags)))
-
-(defun my/org-roam-tag-buffer (tags)
-  (interactive
-   (list (let ((crm-separator "[        ]*:[    ]*"))
-           (completing-read-multiple "Tag: " (org-roam-tag-completions)))))
-  (let* ((tags-buffer-title (string-join tags " & "))
-         (tags-buffer-name (concat "*" tags-buffer-title "*")))
-    (with-current-buffer (get-buffer-create tags-buffer-name)
-      (org-mode)
-      (org-insert-heading 4 t t)
-      (insert tags-buffer-title "\n")
-      (pcase-dolist (`(,_ . ,node) (org-roam-node-read--completions (my/org-roam-filter-tag-fn tags)))
-        (let ((id (org-roam-node-id node))
-              (title (org-roam-node-title node))
-              (description (org-roam-node-formatted node))
-              (filetags (org-roam-node-tags node)))
-          (insert "** " title "\n")
-          (org-insert-property-drawer)
-          (org-set-property "ID" id)
-          (message "id: %s" id)
-          (org-set-property "filetags" (concat ":" (string-join filetags ":") ":"))))
-      (org-fold-show-all))))
+;(defun my/org-insert-image ()
+;  "Select and insert an image at point."
+;  (interactive)
+;  (let* ((file-name (format "%s-%s.png"
+;                            (file-name-sans-extension (buffer-name))
+;                            (random (expt 2 31))))
+;         (path (format "%s/%s/%s" org-roam-directory "images" file-name)))
+;    ;; The mouse movement via xdotool is needed because otherwise, if
+;    ;; unclutter is active, the pointer will remain idden.
+;    (call-process "xdotool" nil 0 nil "mousemove_relative" "--" "-1" "0")
+;    (let ((scrot-exit (call-process "scrot" nil nil nil
+;                                     "-z" "-f" "-s" "--file" path)))
+;      (when (= scrot-exit 0)
+;        (insert (format "[[../images/%s]]" file-name))))))
 
 ;; 來自 "https://takeonrules.com/2024/08/11/exporting-org-mode-elfeed-links/"
 (org-link-set-parameters "elfeed"
@@ -290,9 +251,6 @@ are a subset of its tags"
             (_      (format "%s (%s)" desc url)))
         (format "%s (%s)" desc url))
     (format "%s (%s)" desc link)))
-
-;;; Org-noter settings
-(org-noter-enable-org-roam-integration)
 
 (provide 'init/org)
 

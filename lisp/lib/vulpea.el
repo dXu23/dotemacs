@@ -9,22 +9,22 @@
 (defun my/vulpea-project-update-tag ()
       "Update PROJECT tag in the current buffer."
       (when (and (not (active-minibuffer-window))
-		 (my/vulpea-buffer-p))
-	(save-excursion
-	  (goto-char (point-min))
-	  (let* ((tags (vulpea-buffer-tags-get))
-		 (original-tags tags))
-	    (if (my/vulpea-project-p)
-		(setq tags (cons "project" tags))
-	      (setq tags (remove "project" tags)))
+                 (my/vulpea-buffer-p))
+        (save-excursion
+          (goto-char (point-min))
+          (let* ((tags (vulpea-buffer-tags-get))
+                 (original-tags tags))
+            (if (my/vulpea-project-p)
+                (setq tags (cons "project" tags))
+              (setq tags (remove "project" tags)))
 
-	    ;; cleanup duplicates
-	    (setq tags (seq-uniq tags))
+            ;; cleanup duplicates
+            (setq tags (seq-uniq tags))
 
-	    ;; update tags if changed
-	    (when (or (seq-difference tags original-tags)
-		      (seq-difference original-tags tags))
-	      (apply #'vulpea-buffer-tags-set tags))))))
+            ;; update tags if changed
+            (when (or (seq-difference tags original-tags)
+                      (seq-difference original-tags tags))
+              (apply #'vulpea-buffer-tags-set tags))))))
 
 
 
@@ -34,8 +34,8 @@
        (eq major-mode 'org-mode)
        (string-suffix-p "org" buffer-file-name)
        (string-prefix-p
-	(expand-file-name (file-name-as-directory org-roam-directory))
-	(file-name-directory buffer-file-name))))
+        (expand-file-name (file-name-as-directory org-roam-directory))
+        (file-name-directory buffer-file-name))))
 
 
 
@@ -50,7 +50,7 @@ tasks."
        'headline
      (lambda (h)
        (eq (org-element-property :todo-type h)
-	   'todo))
+           'todo))
      nil 'first-match))
 
 
@@ -62,10 +62,10 @@ tasks."
       #'car
       (org-roam-db-query
        [:select [nodes:file]
-	:from tags
-	:left-join nodes
-	:on (= tags:node-id nodes:id)
-	:where (like tag (quote "%\"project\"%"))]))))
+        :from tags
+        :left-join nodes
+        :on (= tags:node-id nodes:id)
+        :where (like tag (quote "%\"project\"%"))]))))
 
 
 ;;;###autoload
@@ -93,9 +93,9 @@ tasks."
   "Add respective file tag if it's missing in the current note."
   (interactive)
   (let ((tags (vulpea-buffer-tags-get))
-	(tag (vulpea--title-as-tag)))
+        (tag (vulpea--title-as-tag)))
     (when (and (seq-contains-p tags "people")
-	       (not (seq-contains-p tags tag)))
+               (not (seq-contains-p tags tag)))
       (vulpea-buffer-tags-add tag))))
 
 
@@ -104,25 +104,25 @@ tasks."
 (defun my/vulpea-insert-handle (note)
   "Hook to be called on NOTE after `vulpea-insert'."
   (when-let* ((title (vulpea-note-title note))
-	      (tags (vulpea-note-tags note)))
+              (tags (vulpea-note-tags note)))
     (when (seq-contains-p tags "people")
       (save-excursion
-	(ignore-errors
-	  (org-back-to-heading)
-	  (when (eq 'todo (org-element-property
-			   :todo-type
-			   (org-element-at-point)))
-	    (org-set-tags
-	     (seq-uniq
-	      (cons
-	       (vulpea--title-to-tag title)
-	       (org-get-tags nil t))))))))))
+        (ignore-errors
+          (org-back-to-heading)
+          (when (eq 'todo (org-element-property
+                           :todo-type
+                           (org-element-at-point)))
+            (org-set-tags
+             (seq-uniq
+              (cons
+               (my/vulpea--title-to-tag title)
+               (org-get-tags nil t))))))))))
 
 
 
 (defun my/vulpea--title-as-tag ()
   "Return title of the current note as tag."
-  (vulpea--title-to-tag (vulpea-buffer-title-get)))
+  (my/vulpea--title-to-tag (vulpea-buffer-title-get)))
 
 
 

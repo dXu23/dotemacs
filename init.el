@@ -173,8 +173,12 @@
 
 (customize-set-variable 'browse-url-generic-program "/usr/bin/firefox")
 
-(require 'core/auto)
+(customize-set-variable 'custom-file (expand-file-name "custom.el" user-emacs-directory))
 
+(if (file-exists-p custom-file)
+    (load custom-file))
+
+(require 'core/auto)
 (require 'core/appearance)
 (require 'core/help)
 (require 'core/filter)

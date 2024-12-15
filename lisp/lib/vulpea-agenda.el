@@ -29,13 +29,13 @@
   "Show main `org-agenda' view."
   (interactive)
   (let* ((person (vulpea-select-from
-		  "Person"
-		  (vulpea-db-query-by-tags-some '("people"))))
-	 (node (org-roam-node-from-id (vulpea-note-id person)))
-	 (names (cons (org-roam-node-title node)
-		      (org-roam-node-aliases node)))
-	 (tags (seq-map #'vulpea--title-to-tag names))
-	 (query (string-join tags "|")))
+                  "Person"
+                  (vulpea-db-query-by-tags-some '("people"))))
+         (node (org-roam-node-from-id (vulpea-note-id person)))
+         (names (cons (org-roam-node-title node)
+                      (org-roam-node-aliases node)))
+         (tags (seq-map #'my/vulpea--title-to-tag names))
+         (query (string-join tags "|")))
     (let ((org-agenda-overriding-arguments (list t query)))
       (org-agenda nil "M"))))
 
@@ -71,23 +71,23 @@ longer than LEN.
 Usage example:
 
   (setq org-agenda-prefix-format
-	'((agenda . \" %(my/vulpea-agenda-category) %?-12t %12s\")))
+        '((agenda . \" %(my/vulpea-agenda-category) %?-12t %12s\")))
 
 Refer to `org-agenda-prefix-format' for more information."
   (let* ((file-name (when buffer-file-name
-		      (file-name-sans-extension
-		       (file-name-nondirectory buffer-file-name))))
-	 (title (vulpea-buffer-prop-get "title"))
-	 (category (org-get-category))
-	 (result
-	  (or (if (and
-		   title
-		   (string-equal category file-name))
-		  title
-		category)
-	      "")))
+                      (file-name-sans-extension
+                       (file-name-nondirectory buffer-file-name))))
+         (title (vulpea-buffer-prop-get "title"))
+         (category (org-get-category))
+         (result
+          (or (if (and
+                   title
+                   (string-equal category file-name))
+                  title
+                category)
+              "")))
     (if (numberp len)
-	(s-truncate len (s-pad-right len " " result))
+        (s-truncate len (s-pad-right len " " result))
       result)))
 
 

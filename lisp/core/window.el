@@ -6,13 +6,13 @@
 (defvar windmove-repeat-map
   (let ((map (make-sparse-keymap)))
     (keymap-set map "<left>" 'windmove-left)
-    (keymap-set map "S-<left>" 'windmove-swap-states-left)
+    (keymap-set map "C-<left>" 'windmove-swap-states-left)
     (keymap-set map "<right>" 'windmove-right)
-    (keymap-set map "S-<right>" 'windmove-swap-stats-right)
+    (keymap-set map "C-<right>" 'windmove-swap-stats-right)
     (keymap-set map "<up>" 'windmove-up)
-    (keymap-set map "S-<up>" 'windmove-swap-states-up)
+    (keymap-set map "C-<up>" 'windmove-swap-states-up)
     (keymap-set map "<down>" 'windmove-down)
-    (keymap-set map "S-<down>" 'windmove-swap-states-down)
+    (keymap-set map "C-<down>" 'windmove-swap-states-down)
     map))
 
 (map-keymap
@@ -38,6 +38,22 @@
           (other-window (* direction (or arg 1)))
         (setq direction (- direction))
         (other-window (* direction (or arg 1)))))))
+
+(defun ace-window-prefix ()
+  "Use `ace-window' to display the buffer of the next command.
+The next buffer is the buffer displayed by the next command invoked
+immediately after this command (ignoring reading from the minibuffer).
+Creates a new window before displaying the buffer.
+When `switch-to-buffer-obey-display-actions' is non-nil,
+`switch-to-buffer' commands are also supported."
+  (interactive)
+  (display-buffer-override-next-command
+   (lambda (buffer _)
+     (let ((window (aw-select (propertize " ACE" 'face 'mode-line-highlight)))
+           (type 'reuse))
+       (cons window type)))
+   nil "[ace-window]")
+  (message "Use `ace-window' to display next command buffer..."))
 
 (keymap-global-set "M-o" 'other-window-alternating)
 

@@ -105,7 +105,7 @@ search results, displaying entries without switching to them."
   (lambda ()
     "Toggle a tag on an Elfeed search selection"
     (interactive)
-    (elfeed-search-toggle-all-mytag)))
+    (elfeed-search-toggle-all mytag)))
 
 (keymap-set elfeed-search-mode-map "l" (my/elfeed-tag-selection-as 'readlater))
 (keymap-set elfeed-search-mode-map "d" (my/elfeed-tag-selection-as 'junk))
