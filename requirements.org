@@ -1,0 +1,30 @@
+* My Emacs config specification
+
+The Emacs lisp code in my config shall be divided into two categories:
+startup elisp code and Just-In-Time (JIT) elisp code. Startup elisp
+code is loaded when Emacs starts, and JIT elisp code only loads when
+a file corresponding to a respective mode is opened. The purpose of this
+is to reduce load time in Emacs as much as possible.
+
+* UI/UX
+The menu bar shall be hidden.
+
+The tool bar shall be hidden.
+
+The scroll bar shall be hidden.
+
+Line numbers shall be displayed in all modes, except in any mode that
+is a shell (e.g. shell-mode, vterm, eshell, etc.)
+
+
+* Programming
+For programming languages with a REPL, the keypress "C-c C-z" shall
+open a REPL in another window if a REPL process was started.
+
+Imported objects/functions that are not used shall be greyed out.
+
+When the point in Emacs is on a function name, the keypress "M-." goes
+directly to the function definition.
+
+When the point in Emacs is on a function name, the keypress
+"C-c C-d d" shall fetch the documentation for that function.
