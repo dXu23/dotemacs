@@ -228,6 +228,12 @@
 ;;       (setq my/last-org-table-reference msg)
 ;;       msg))))
 
+;;; Make Org mode work with windmove
+(add-hook 'org-shiftup-final-hook 'windmove-up)
+(add-hook 'org-shiftleft-final-hook 'windmove-left)
+(add-hook 'org-shiftdown-final-hook 'windmove-down)
+(add-hook 'org-shiftright-final-hook 'windmove-right)
+
 ;;;###autoload
 (defun my/org-agenda-setup ()
   (Tex-fold-mode))

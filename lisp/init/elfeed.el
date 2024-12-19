@@ -8,11 +8,14 @@
 (customize-set-variable 'elfeed-feeds
                         '(
                           "https://nullprogram.com/feed"
+                          "https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss"
+                          "https://skeptric.com/index.xml"
+                          "https://feeds.simplecast.com/Xf79_U6x"
+                          "https://realsocialseo.com/feed/"
+                          "https://weworkremotely.com/categories/remote-programming-jobs.rss"
                           "https://grass.show/index.xml"
                           "https://tilde.town/~ramin_hal9001/atom.xml"
-                          "https://rss.lilydjwg.me/zhihuzhuanlan/FrontendMagazine"
-                          "http://francesfu.blogspot.com/feeds/posts/default?alt=rss"
-                          "https://planet.emacslife.com/atom.xml"
+                          "https://blog.lilydjwg.me/posts.rss"
                           "https://karthinks.com/software/index.xml"
                           "https://www.nayuki.io/rss20.xml"
                           "https://dannyda.com/feed"
