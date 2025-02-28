@@ -131,6 +131,7 @@
                                       :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 
+;; Source: https://endlessparentheses.com/ispell-and-org-mode.html
 (defun my/org-ispell ()
   "Configure `ispell-skip-region-alist' for `org-mode'."
   (make-local-variable 'ispell-skip-region-alist)
@@ -145,7 +146,8 @@
   (auto-fill-mode)
   (prettify-symbols-mode)
   (turn-on-org-cdlatex)
-  (my/org-ispell))
+  (my/org-ispell)
+  (flyspell-mode))
 
 ;; Open org agenda in current window
 (setq org-agenda-window-setup (quote current-window))

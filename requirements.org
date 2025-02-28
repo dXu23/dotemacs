@@ -6,7 +6,27 @@ code is loaded when Emacs starts, and JIT elisp code only loads when
 a file corresponding to a respective mode is opened. The purpose of this
 is to reduce load time in Emacs as much as possible.
 
-* UI/UX
+** Productivity
+Projects are composed of ToDos.
+
+There are two kinds of Projects: UnorderedProjects and
+OrderedProjects.
+
+Habits are a kind of ToDo, a RepeatingTodo. So Habits can be said to
+extend/inherit from a ToDo.
+
+Areas can contain Projects and ToDos.
+
+Resources are their own thing.
+
+#+begin_src ditaa
+
+#+end_src
+
+#+begin_src plantuml
+#+end_src
+
+** UI/UX
 The menu bar shall be hidden.
 
 The tool bar shall be hidden.
@@ -16,8 +36,7 @@ The scroll bar shall be hidden.
 Line numbers shall be displayed in all modes, except in any mode that
 is a shell (e.g. shell-mode, vterm, eshell, etc.)
 
-
-* Programming
+** Programming
 For programming languages with a REPL, the keypress "C-c C-z" shall
 open a REPL in another window if a REPL process was started.
 

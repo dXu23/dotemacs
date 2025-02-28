@@ -114,6 +114,17 @@ Sets up Julia")
 ;;; Generated autoloads from config/react.el
 
 (autoload 'my/react-setup "config/react")
+
+
+;;; Generated autoloads from config/gud.el
+
+(autoload 'my/gud-setup "config/gud")
+(register-definition-prefixes "config/gud" '("gud-"))
+
+
+;;; Generated autoloads from config/go.el
+
+(autoload 'my/go-setup "config/go")
 
 ;;; End of scraped data
 

@@ -20,6 +20,7 @@
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-protocol)
+(require 'org-habit)
 (require 'org-noter)
 
 (require 'denote)
@@ -41,6 +42,8 @@
 
 (customize-set-variable 'denote-journal-extras-directory "journal")
 
+(customize-set-variable 'org-habit-show-all-today t)
+
 (customize-set-variable 'org-capture-templates
                         `(("t" "New task [inbox]" entry
                            (file+headline org-default-notes-file "Tasks")
@@ -53,6 +56,18 @@
                           ("f" "Fleeting note [inbox]" item
                            (file+headline org-default-notes-file "Notes")
                            "- %?")
+                          ("h" "Habit" entry
+                           (file+headline org-default-notes-file "Tasks")
+                           ,(concat "* TODO %i\n"
+                                    "SCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n"
+                                    ":PROPERTIES:\n"
+                                    ":STYLE: habit\n"
+                                    ":END:"))
+                          ("P" "Project" entry
+                           (file+headline "projects.org" "Projects")
+                           ("** PROJ %i%?\n"
+                            ":PROPERTIES:\n"
+                            ":COOKIE_STYLE: todo recursive"))
                           ("p" "Permanent note" plain
                            (file denote-last-path)
                            (function
@@ -79,7 +94,7 @@
                           ("T" "Tickler" entry
                            (file+headline "tickler.org" "Tickler")
                            "* %i%? \n %U")
-                          ("p" "Protocol" entry
+                          ("w" "Protocol" entry
                            (file+headline "refile.org" "Notes")
                            ,(concat "* %:description :RESEARCH:\n"
                                     "#+BEGIN_QUOTE\n"
@@ -199,6 +214,30 @@ See also `org-save-all-org-buffers'"
       '((sequence "TODO(t@/!)" "NEXT(n)" "SOMEDAY(s)" "PROJ(p)" "WAITING(w@/!)" "|"
                   "DONE(d@/!)" "CANCELED(c)")))
 
+(defun my/org-after-tag-change-hook ()
+  "This function makes sure that the current heading has
+(1) the tag :project:
+(2) has property COOKIE_DATA set to \"todo recursive\"
+(3) has any TODO keyword and
+(4) a leading progress indicator"
+  (save-excursion
+    (when (member "project" (org-get-tags))
+      (org-set-property "COOKIE_DATA" "todo recursive")
+      (org-back-to-heading t)
+      (pcase-let ((`(_ _ ,keyword _ ,title) (org-heading-components)))
+        (if (bound-and-true-p keyword)
+            (when (not (string-prefix-p "[" title))
+              (forward-whitespace 2)
+              (insert "[/] "))
+          (progn
+            (forward-whitespace 1)
+            (message
+             (if (string-prefix-p "[" title)
+                 "NEXT "
+               "NEXT [/] "))))))))
+
+(add-hook 'org-after-tags-change-hook #'my/org-after-tag-change-hook)
+
 (defun log-todo-next-creation-date (&rest _)
   "Log NEXT creation time in the property drawer under the key `ACTIVATED'"
   (when (and (string= (org-get-todo-state) "NEXT")
@@ -228,6 +267,18 @@ See also `org-save-all-org-buffers'"
 ;        (insert (format "[[../images/%s]]" file-name))))))
 
 ;; 來自 "https://takeonrules.com/2024/08/11/exporting-org-mode-elfeed-links/"
+
+;;; Citations in Org
+(customize-set-variable 'org-cite-global-bibliography
+                        (list (expand-file-name "biblio.bib" *org-root*)))
+
+(customize-set-variable 'org-cite-export-processors
+                        '((md . (csl "chicago-fullnote-bibliography.csl"))
+                          (latex bibtex)
+                          (odt . (csl "chicago-fullnote-bibliography.csl"))
+                          (t . (csl "modern-language-association.csl"))))
+
+
 (org-link-set-parameters "elfeed"
   :follow #'elfeed-link-open
   :store #'elfeed-link-store-link

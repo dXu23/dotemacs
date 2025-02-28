@@ -9,7 +9,6 @@
               '(("\\([^/]+\\)\\.c\\'" "\\1.h")))
   (setopt c-ts-mode-indent-offset 4
           c-ts-indent-style 'k&r)
-  (indent-tabs-mode)
   (treesit-font-lock-recompute-features
    '(function variable) '(definition))
 

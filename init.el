@@ -40,7 +40,7 @@
 
 ;;; Visit config file
 (defun config-visit ()
-  "Visits config file, specified by *emacs-init-file."
+  "Visits config file, specified by *emacs-init-file*."
   (interactive)
   (find-file *emacs-init-file*))
 

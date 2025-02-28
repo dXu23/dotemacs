@@ -11,12 +11,14 @@
 (add-hook 'eshell-mode-hook #'my/eshell-setup)
 (add-hook 'julia-mode-hook #'my/julia-setup)
 (add-hook 'calc-mode-hook #'my/calc-setup)
+(add-hook 'gud-mode-hook #'my/gud-setup)
 
 ;; cperl mode is better than perl
 (add-hook 'perl-mode-hook #'my/perl-setup)
 ;; (defalias 'perl-mode 'cperl-mode)
 
 (add-hook 'java-ts-mode-hook #'my/java-setup)
+(add-hook 'go-ts-mode-hook #'my/go-setup)
 (add-hook 'c-ts-mode-hook #'my/c-setup)
 (add-hook 'rust-ts-mode-hook #'my/rust-setup)
 (add-hook 'python-ts-mode-hook #'my/python-setup)

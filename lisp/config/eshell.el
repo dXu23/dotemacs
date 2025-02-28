@@ -1,4 +1,3 @@
-(require 'eshell-mode)
 (require 'em-smart)
 (require 'capf-autosuggest)
 

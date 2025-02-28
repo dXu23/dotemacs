@@ -57,6 +57,9 @@
 [submodule "cider"]
         path = lib/cider
         url = https://github.com/clojure-emacs/cider
+[submodule "citar"]
+        path = lib/citar
+        url = https://github.com/emacs-citar/citar
 [submodule "clojure-mode"]
         path = lib/clojure-mode
         url = https://github.com/clojure-emacs/clojure-mode
@@ -75,6 +78,9 @@
 [submodule "consult-dir"]
         path = lib/consult-dir
         url = https://github.com/karthink/consult-dir
+[submodule "consult-notes"]
+        path = lib/consult-notes
+        url = https://github.com/mclear-tools/consult-notes
 [submodule "corfu"]
         path = lib/corfu
         url = https://github.com/minad/corfu
@@ -88,7 +94,7 @@
         url = https://github.com/kiwanami/emacs-deferred
 [submodule "denote"]
         path = lib/denote
-        url = git@github.com:emacsmirror/denote.git
+        url = https://github.com/protesilaos/denote.git
 [submodule "denote-explore"]
         path = lib/denote-explore
         url = https://github.com/pprevos/denote-explore
@@ -230,6 +236,9 @@
 [submodule "nov"]
         path = lib/nov
         url = https://depp.brause.cc/nov.el.git
+[submodule "ob-pic"]
+        path = lib/ob-pic
+        url = https://github.com/ddoherty03/ob-pic.git
 [submodule "olivetti"]
         path = lib/olivetti
         url = https://github.com/rnkn/olivetti
@@ -245,6 +254,9 @@
 [submodule "org-drill"]
         path = lib/org-drill
         url = https://gitlab.com/phillord/org-drill
+[submodule "org-edna"]
+        path = lib/org-edna
+        url = git@github.com:emacsmirror/org-edna.git
 [submodule "org-noter"]
         path = lib/org-noter
         url = https://github.com/org-noter/org-noter
@@ -262,6 +274,9 @@
 [submodule "paredit"]
         path = lib/paredit
         url = https://mumble.net/~campbell/git/paredit.git
+[submodule "parsebib"]
+        path = lib/parsebib
+        url = https://github.com/joostkremers/parsebib
 [submodule "parseclj"]
         path = lib/parseclj
         url = https://github.com/clojure-emacs/parseclj
