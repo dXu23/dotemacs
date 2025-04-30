@@ -111,35 +111,7 @@ Of course, appearance.el needs to have the following provide statement:
 #+end_src
 
 This simultaneously simplifies the code needed to adjust the load-path, while also
-(for the most part) reducing the chances of a namespace conflict. One, however, might suggest the
-following config layout though:
-
-#+begin_export ascii
- - .config
-  |- emacs
-   |- init.el
-    |- lisp
-     |- hooks.el
-     |- core-appearance.el
-     |- core-minibuffer.el
-     |- core-window.el
-     |- init-scheme.el
-     |- init-python.el
-     |- init-c.el
-     |- init-cpp.el
-     |- init-haskell.el
-     |- init-asm.el
-     |- init-common-lisp.el
-     |- init-clojure.el
-     |- init-java.el
-#+end_export
-
-Of course, the Makefile rule that generates loaddefs.el would need the following adjustment:
-
-#+begin_src makefile
-    lisp/loaddefs.el: lisp/hooks.el
-            cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el .
-#+end_src
+(for the most part) reducing the chances of a namespace conflict.
 
 The reason that I decided to not choose the flattened directory layout was due to the
 additionial core-*.el files that loaddefs-generate-batch would scan over. As many

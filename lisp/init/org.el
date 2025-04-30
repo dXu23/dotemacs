@@ -143,6 +143,19 @@
 
 (setq org-agenda-hide-tags-regexp ".")
 
+;;; https://whhone.com/posts/org-agenda-repeated-tasks/
+(setopt org-agenda-scheduled-leaders '("Sched" "S.%2dx")
+        org-agenda-deadline-leaders '("Deadl" "In%2dd" "D.%2dx))"))
+
+(defun my/org-agenda-repeater ()
+  "The repeater shown in org-agenda-prefix for agenda."
+  (if (org-before-first-heading-p)
+      "-------" ; fill the time grid
+    (format "%5s: " (or (org-get-repeat) ""))))
+
+(setcdr (assoc 'agenda org-agenda-prefix-format)
+        " %i %-12:c%?-12t%s%(my/org-agenda-repeater)")
+
 (setq org-deadline-string "DUE:")
 (setq org-scheduled-string "SCHEDULED:")
 
@@ -180,6 +193,16 @@
 (keymap-set text-mode-map "C-c n i" #'denote-link)
 (keymap-set text-mode-map "C-c n I" #'denote-add-links)
 (keymap-set text-mode-map "C-c n b" #'denote-backlinks)
+(keymap-set text-mode-map "C-c n R" #'denote-rename-file-using-front-matter)
+
+(keymap-set dired-mode-map "C-c C-d C-i" #'denote-dired-link-marked-notes)
+(keymap-set dired-mode-map "C-c C-d C-r" #'denote-dired-rename-marked-files)
+(keymap-set dired-mode-map "C-c C-d C-k" #'denote-dired-rename-marked-notes-with-keywords)
+(keymap-set dired-mode-map "C-c C-d C-f" #'denote-dired-link-marked-notes-using-front-matter)
+
+(consult-denote-mode 1)
+(keymap-global-set "C-c n f" #'consult-denote-find)
+(keymap-global-set "C-c n g" #'consult-denote-grep)
 
 ; (keymap-set org-mode-map "C-c n d l" #'denote-org-extras-dbl)
 
@@ -225,16 +248,15 @@ See also `org-save-all-org-buffers'"
       (org-set-property "COOKIE_DATA" "todo recursive")
       (org-back-to-heading t)
       (pcase-let ((`(_ _ ,keyword _ ,title) (org-heading-components)))
-        (if (bound-and-true-p keyword)
+        (if keyword
             (when (not (string-prefix-p "[" title))
               (forward-whitespace 2)
               (insert "[/] "))
           (progn
             (forward-whitespace 1)
-            (message
-             (if (string-prefix-p "[" title)
-                 "NEXT "
-               "NEXT [/] "))))))))
+            (insert (if (string-prefix-p "[" title)
+                        "NEXT "
+                      "NEXT [/] "))))))))
 
 (add-hook 'org-after-tags-change-hook #'my/org-after-tag-change-hook)
 
@@ -245,6 +267,9 @@ See also `org-save-all-org-buffers'"
     (org-entry-put nil "ACTIVATED" (format-time-string "[%Y-%m-%d]"))))
 
 (add-hook 'org-after-todo-state-change-hook #'log-todo-next-creation-date)
+
+;;; Org archive
+(customize-set-variable 'org-archive-location (expand-file-name "archive.org::datetree/* Finished Tasks" org-directory))
 
 
 ;;; Basic Org Settings
@@ -302,6 +327,7 @@ See also `org-save-all-org-buffers'"
             (_      (format "%s (%s)" desc url)))
         (format "%s (%s)" desc url))
     (format "%s (%s)" desc link)))
+
 
 (provide 'init/org)
 

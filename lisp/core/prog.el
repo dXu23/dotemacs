@@ -1,5 +1,6 @@
 (customize-set-variable 'major-mode-remap-alist
                         '((c-mode . c-ts-mode)
+                          (cc-mode . cc-ts-mode)
                           (yaml-mode . yaml-ts-mode)
                           (rust-mode . rust-ts-mode)
                           (bash-mode . bash-ts-mode)

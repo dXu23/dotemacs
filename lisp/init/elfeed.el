@@ -10,14 +10,17 @@
                           "https://nullprogram.com/feed"
                           "http://devonzuegel.com/feed.xml"
                           "http://feeds.feedburner.com/JakeMccrarysMusings"
+                          "https://www.socialmediatoday.com/feeds/news/"
+                          "https://simondobson.org/rss.xml"
+                          "https://michaelnielsen.org/ddi/feed/"
                           ("https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss" jobs)
                           ("https://apnews.com/index.rss" news)
                           ("https://congressionaldish.libsyn.com/rss" news)
                           ("https://www.reutersagency.com/feed/?taxonomy=best-topics&post_type=best" news)
                           "https://skeptric.com/index.xml"
-                          "https://feeds.simplecast.com/Xf79_U6x"
+                          ("https://feeds.simplecast.com/Xf79_U6x" jobs)
                           "https://realsocialseo.com/feed/"
-                          "https://weworkremotely.com/categories/remote-programming-jobs.rss"
+                          ("https://weworkremotely.com/categories/remote-programming-jobs.rss" jobs)
                           "https://grass.show/index.xml"
                           "https://tilde.town/~ramin_hal9001/atom.xml"
                           "https://blog.lilydjwg.me/posts.rss"

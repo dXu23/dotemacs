@@ -56,7 +56,9 @@
 
 ;;; Basic Settings
 (setq-default indent-tabs-mode nil)
+
 (customize-set-variable 'inhibit-startup-message t)
+(add-hook 'after-init-hook #'org-agenda-list)
 
 (customize-set-variable 'use-short-answers t)
 
@@ -129,6 +131,7 @@
             (ibuffer-switch-to-saved-filter-groups "default")))
 
 (put 'downcase-region 'disabled nil)
+(put 'dired-find-file-other-buffer 'disabled t)
 (put 'set-goal-column 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)

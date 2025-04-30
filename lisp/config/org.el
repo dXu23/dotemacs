@@ -15,9 +15,12 @@
  'org-babel-load-languages
  '(
    (awk . t)
+   (C . t)
+   (calc . t)
    (ditaa . t)
    (dot . t)
    (emacs-lisp . t)
+   (gnuplot . t)
    (latex . t)
    (octave . t)
    (plantuml . t)
@@ -143,7 +146,7 @@
 ;;;###autoload
 (defun my/org-setup ()
   (org-bullets-mode)
-  (auto-fill-mode)
+  (visual-line-mode)
   (prettify-symbols-mode)
   (turn-on-org-cdlatex)
   (my/org-ispell)
