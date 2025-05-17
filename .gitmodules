@@ -125,6 +125,9 @@
 [submodule "elisp-refs"]
         path = lib/elisp-refs
         url = https://github.com/Wilfred/elisp-refs
+[submodule "elpher"]
+        path = lib/elpher
+        url = https://thelambdalab.xyz/git/elpher.git
 [submodule "emacsql"]
         path = lib/emacsql
         url = git@github.com:skeeto/emacsql.git
@@ -307,6 +310,9 @@
 [submodule "pikchr-mode"]
         path = lib/pikchr-mode
         url = https://github.com/kljohann/pikchr-mode
+[submodule "proof-general"]
+        path = lib/proof-general
+        url = https://github.com/ProofGeneral/PG
 [submodule "pyenv-mode"]
         path = lib/pyenv-mode
         url = https://github.com/pythonic-emacs/pyenv-mode

@@ -202,7 +202,7 @@
 ;;; init.el ends here
 ;;
 
- ;; Local Variables:
+;; Local Variables:
 ;; outline-regexp: ";;;\\(;* [^ \t\n]\\|###autoload\\)"
 ;; eval: (outline-minor-mode 1)
 ;; End:

@@ -20,14 +20,18 @@
    (ditaa . t)
    (dot . t)
    (emacs-lisp . t)
-   (gnuplot . t)
    (latex . t)
    (octave . t)
+   (pic . t)
    (plantuml . t)
    (python . t)
    (R . t)
    (ruby . t)
+   (scheme . t)
    (shell . t)))
+
+(setq org-link-abbrev-alist
+      '(("RFC" . "https://www.rfc-editor.org/rfc/rfc%s.txt")))
 
 ;;; Speed keys
 (customize-set-variable 'org-use-speed-commands t)
