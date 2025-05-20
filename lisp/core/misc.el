@@ -33,7 +33,13 @@ Argument SUBJECT Wikipedia subject to obtain references on."
                   (t
                    (let ((a-tag (assoc 'a cite-tag)))
                      (push (cons (dom-attr a-tag 'href) (dom-text a-tag)) result))))
-                  ))))))
+            ))))))
+
+(defun get-company-about (company-url)
+  (let ((company-about-url (concat))) (with-current-buffer
+        (url-retrieve-synchronously company-url)
+      ))
+  )
 
 (defun apply-function-to-region (fn)
   "Applies Elisp function that takes a string as

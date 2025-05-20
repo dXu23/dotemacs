@@ -176,6 +176,10 @@
 
 (customize-set-variable 'org-agenda-skip-deadline-if-done t)
 
+(setq org-format-latex-options '(:foreground default :background default :scale 1.8 :html-foreground
+             "Black" :html-background "Transparent" :html-scale 1.0
+             :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+
 ; Org Table Reference Functions
 ;; (defun my/org-table-cell-at-point ()
 ;;   "At point, return the cell object from an Org table.
@@ -246,3 +250,5 @@
 ;;;###autoload
 (defun my/org-agenda-setup ()
   (Tex-fold-mode))
+
+(provide 'config/org)

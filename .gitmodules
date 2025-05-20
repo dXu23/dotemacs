@@ -239,6 +239,9 @@
 [submodule "merlin-eldoc"]
         path = lib/merlin-eldoc
         url = https://github.com/Khady/merlin-eldoc
+[submodule "mmix-mode"]
+        path = lib/mmix-mode
+        url = https://github.com/ppareit/mmix-mode.git
 [submodule "nasm-mode"]
         path = lib/nasm-mode
         url = https://github.com/skeeto/nasm-mode

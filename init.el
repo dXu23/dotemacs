@@ -190,7 +190,6 @@
 (require 'core/completion)
 (require 'core/minibuffer)
 (require 'core/prog)
-(require 'core/hyperbole)
 
 (require 'init/org)
 (require 'init/elfeed)
