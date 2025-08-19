@@ -101,6 +101,9 @@
 [submodule "denote-explore"]
         path = lib/denote-explore
         url = https://github.com/pprevos/denote-explore
+[submodule "direnv"]
+        path = lib/direnv
+        url = https://github.com/wbolster/emacs-direnv
 [submodule "djvu"]
         path = lib/djvu
         url = git@github.com:emacsmirror/djvu.git
@@ -245,6 +248,9 @@
 [submodule "nasm-mode"]
         path = lib/nasm-mode
         url = https://github.com/skeeto/nasm-mode
+[submodule "nominatim"]
+        path = lib/nominatim
+        url = https://codeberg.org/emacs-weirdware/nominatim.git
 [submodule "nov"]
         path = lib/nov
         url = https://depp.brause.cc/nov.el.git
@@ -283,6 +289,9 @@
         url = https://github.com/org-roam/org-roam
         load-path = .
         load-path = extensions
+[submodule "org-street"]
+        path = lib/org-street
+        url = https://codeberg.org/emacs-weirdware/org-street.git
 [submodule "paredit"]
         path = lib/paredit
         url = https://mumble.net/~campbell/git/paredit.git
@@ -382,6 +391,9 @@
 [submodule "tuareg"]
         path = lib/tuareg
         url = https://github.com/ocaml/tuareg
+[submodule "uv-mode"]
+        path = lib/uv-mode
+        url = https://github.com/z80dev/uv-mode
 [submodule "vertico"]
         path = lib/vertico
         url = https://github.com/minad/vertico
