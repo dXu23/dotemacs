@@ -49,7 +49,7 @@
 (set-face-attribute 'default nil :height 160)
 
 ; Necessary for Emacs client to work.
-(add-to-list 'default-frame-alist '(font . "Fira Code 16"))
+(add-to-list 'default-frame-alist '(font . "Ubuntu Mono 16"))
 
 (require 'display-line-numbers)
 

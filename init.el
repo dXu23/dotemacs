@@ -147,7 +147,7 @@
 ;; Prevent blank strings from being put in kill ring
 (customize-set-variable 'kill-transform-function
                         (lambda (string)
-                          (and (not (not string-blank-p string))
+                          (and (not (string-blank-p string))
                                string)))
 
 (pixel-scroll-precision-mode)

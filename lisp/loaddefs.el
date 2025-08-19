@@ -125,6 +125,12 @@ Sets up Julia")
 ;;; Generated autoloads from config/go.el
 
 (autoload 'my/go-setup "config/go")
+
+
+;;; Generated autoloads from config/cpp.el
+
+(autoload 'my/cpp-setup "config/cpp" "\
+Sets up Treesitter for C++.")
 
 ;;; End of scraped data
 

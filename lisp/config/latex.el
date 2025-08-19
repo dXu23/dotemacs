@@ -48,6 +48,7 @@ If called with a single \\[universal-argument], just call
   (push ("¶ {1}"   . ("paragraph" "paragraph*"  )) TeX-fold-macro-spec-list)
 
   (prettify-symbols-mode)
+  (cdlatex-mode)
   )
 
 (provide 'config/latex)
