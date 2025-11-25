@@ -3,10 +3,11 @@
 
 ;;; Vertico configuration
 (require 'vertico)
+(require 'vertico-sort)
 (setopt vertico-count 13
         vertico-resize t
         vertico-cycle nil
-        vertico-sort-function #'vertico-sort-history-alpha)
+        vertico-sort-function #'vertico-sort-history-length-alpha)
 
 (keymap-set vertico-map "<tab>" #'vertico-insert)
 (keymap-set vertico-map "<escape>" #'minibuffer-keyboard-quit)
@@ -55,11 +56,11 @@
 
 ;;;; Vertico multiform
 (require 'vertico-multiform)
-;; (customize-set-variable 'vertico-multiform-categories
-;;			'((file reverse)
-;;			  (imenu buffer)
-;;			  (library reverse indexed)
-;;			  (t reverse)))
+(customize-set-variable 'vertico-multiform-categories
+                        '((file reverse)
+                          (imenu buffer)
+                          (library reverse indexed)
+                          (t reverse)))
 
 (keymap-set vertico-map "M-G" #'vertico-multiform-grid)
 (keymap-set vertico-map "M-F" #'vertico-multiform-flat)
