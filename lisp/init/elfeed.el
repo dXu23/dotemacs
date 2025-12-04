@@ -28,6 +28,7 @@
                           "https://dannyda.com/feed"
                           "https://arcan-fe.com/feed/"
                           "https://susam.net/feed.xml"
+                          "https://sirupsen.com/atom.xml"
                           ))
 
 (customize-set-variable 'elfeed-show-entry #'my/elfeed-display-buffer)
