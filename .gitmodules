@@ -122,6 +122,9 @@
 [submodule "eev"]
         path = lib/eev
         url = https://github.com/edrx/eev
+[submodule "eiffel-mode"]
+        path = lib/eiffel-mode
+        url = https://github.com/jonhermansen/eiffel-mode.git
 [submodule "elfeed"]
         path = lib/elfeed
         url = https://github.com/skeeto/elfeed

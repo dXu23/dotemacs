@@ -37,8 +37,9 @@
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 
 (customize-set-variable 'org-default-notes-file (expand-file-name "inbox.org" org-directory))
-(customize-set-variable 'org-agenda-files (list org-default-notes-file "agenda.org"
-                                                "notes.org" "projects.org"))
+(customize-set-variable 'org-agenda-files
+                        (list org-default-notes-file "agenda.org"
+                              "notes.org" "projects.org"))
 
 (customize-set-variable 'denote-journal-extras-directory "journal")
 
@@ -65,7 +66,7 @@
                                     ":END:"))
                           ("P" "Project" entry
                            (file+headline "projects.org" "Projects")
-                           ("** PROJ %i%?\n"
+                           ,(concat "** PROJ %i%?\n"
                             ":PROPERTIES:\n"
                             ":COOKIE_STYLE: todo recursive"))
                           ("p" "Permanent note" plain

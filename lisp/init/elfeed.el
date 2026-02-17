@@ -9,8 +9,10 @@
                         '(
                           "https://nullprogram.com/feed"
                           "https://www.comptia.org/rssfeeds/comptia-blog"
+                          "https://blog.ezyang.com/feed.xml"
                           "http://devonzuegel.com/feed.xml"
                           "http://feeds.feedburner.com/JakeMccrarysMusings"
+                          "http://100r.ca/links/rss.xml"
                           "https://simondobson.org/rss.xml"
                           "https://michaelnielsen.org/ddi/feed/"
                           ("https://weworkremotely.com/categories/remote-devops-sysadmin-jobs.rss" jobs)

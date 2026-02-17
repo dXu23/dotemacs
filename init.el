@@ -59,6 +59,7 @@
 
 (customize-set-variable 'inhibit-startup-message t)
 (add-hook 'after-init-hook #'org-agenda-list)
+(add-hook 'server-after-make-frame-hook #'org-agenda-list)
 
 (customize-set-variable 'use-short-answers t)
 
@@ -163,11 +164,11 @@
 (require 'which-key)
 (which-key-mode)
 
-; (advice-add 'compile :before (lambda () (ad-set-arg 1 t)))
+(defadvice my/compile-force-comint (args)
+  "Enforce the COMINT argument (the second argument) of `compile' to be t."
+  (setf (nth 1 args) t) args)
 
-(defadvice compile (before ad-compile-start activate)
-  "Advises `compile' so that it sets the argument COMINT to t."
-  (ad-set-arg 1 t))
+(advice-add 'compile :filter-args #'my/compile-force-comint)
 
 (pdf-tools-install)
 (pdf-loader-install)

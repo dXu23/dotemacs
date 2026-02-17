@@ -134,6 +134,7 @@ Exempt modes are defined in `display-line-numbers-exempt-modes'."
   :type 'integer
   :group 'tab-line)
 
+;; From https://andreyor.st/posts/2020-05-10-making-emacs-tabs-look-like-in-atom/
 (defun my/tab-line-name-buffer (buffer &rest _buffers)
   (with-current-buffer buffer
     (let* ((window-width (window-width (get-buffer-window)))
@@ -143,12 +144,21 @@ Exempt modes are defined in `display-line-numbers-exempt-modes'."
            (tab-amount (length (tab-line-tabs-window-buffers)))
            (window-max-tab-width (/ window-width tab-amount))
            (tab-width (- (cond ((>= window-max-tab-width tab-line-tab-max-width)
-                                ((< window-max-tab-width tab-line-tab-min-width)
-                                 tab-line-tab-min-width)
-                                (t window-max-tab-width))
-                               close-button-size))
-                      (buffer-name (string-trim (buffer-name)))
-                      (name-width (length buffer-name)))))))
+                                tab-line-tab-max-width)
+                               ((< window-max-tab-width tab-line-tab-min-width)
+                                tab-line-tab-min-width)
+                               (t window-max-tab-width))
+                         close-button-size))
+           (buffer-name (string-trim (buffer-name)))
+           (name-width (length buffer-name)))
+      (if (>= name-width (- tab-width 3))
+          (concat " "
+                  (truncate-string-to-width buffer-name (- tab-width 3))
+                  "… ")
+        (let* ((padding (make-string (/ (- tab-width name-width 2) ?\s))
+                        (buffer-name (concat padding buffer-name))
+                        (name-width (length buffer-name)))
+               (concat buffer-name (make-string (- tab-width name-width) ?\s))))))))
 
 
 (add-hook 'window-configuration-change-hook
