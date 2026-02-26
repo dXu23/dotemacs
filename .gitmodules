@@ -19,17 +19,6 @@
 [submodule "async"]
         path = lib/async
         url = git@github.com:jwiegley/emacs-async.git
-[submodule "auctex"]
-        path = lib/auctex
-        url = https://git.savannah.gnu.org/git/auctex.git
-        load-path = .
-        build-step = ./autogen.sh
-        build-step = ./configure --with-lispdir=~/.emacs.d/lib/auctex
-        build-step = make
-        build-step = make doc
-        build-step = borg-maketex
-        build-step = borg-makeinfo
-        build-step = borg-update-autoloads
 [submodule "auto-compile"]
         path = lib/auto-compile
         url = https://github.com/emacscollective/auto-compile
@@ -71,7 +60,7 @@
         url = https://github.com/mickeynp/combobulate
 [submodule "compat"]
         path = lib/compat
-        url = https://git.sr.ht/~pkal/compat
+        url = https://github.com/emacs-compat/compat.git
 [submodule "consult"]
         path = lib/consult
         url = https://github.com/minad/consult
@@ -101,6 +90,9 @@
 [submodule "denote-explore"]
         path = lib/denote-explore
         url = https://github.com/pprevos/denote-explore
+[submodule "denote-journal"]
+        path = lib/denote-journal
+        url = https://github.com/protesilaos/denote-journal
 [submodule "direnv"]
         path = lib/direnv
         url = https://github.com/wbolster/emacs-direnv
@@ -210,9 +202,12 @@
 [submodule "julia-repl"]
         path = lib/julia-repl
         url = https://github.com/tpapp/julia-repl
+[submodule "lib/cond-let"]
+        path = lib/cond-let
+        url = https://github.com/tarsius/cond-let.git
 [submodule "llama"]
         path = lib/llama
-        url = https://git.sr.ht/~tarsius/llama
+        url = https://github.com/tarsius/llama.git
 [submodule "lsp-mode"]
         path = lib/lsp-mode
         url = https://github.com/emacs-lsp/lsp-mode

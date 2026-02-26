@@ -164,14 +164,14 @@
 (require 'which-key)
 (which-key-mode)
 
-(defadvice my/compile-force-comint (args)
+(defun my/compile-force-comint (args)
   "Enforce the COMINT argument (the second argument) of `compile' to be t."
   (setf (nth 1 args) t) args)
 
 (advice-add 'compile :filter-args #'my/compile-force-comint)
 
-(pdf-tools-install)
-(pdf-loader-install)
+;; (pdf-tools-install)
+;; (pdf-loader-install)
 
 (customize-set-variable 'display-raw-bytes-as-hex t)
 
@@ -184,7 +184,7 @@
 
 (require 'core/auto)
 (require 'core/appearance)
-(require 'core/help)
+;; (require 'core/help)
 (require 'core/filter)
 (require 'core/window)
 (require 'core/action)

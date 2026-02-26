@@ -1,4 +1,4 @@
-;;; help.el --- Help configuration
+;;; help.el --- Help configuration  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;

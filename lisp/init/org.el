@@ -24,7 +24,7 @@
 (require 'org-noter)
 
 (require 'denote)
-(require 'denote-journal-extras)
+(require 'denote-journal)
 (require 'elfeed)
 
 (defvar *org-root* "~/Documents/org")
