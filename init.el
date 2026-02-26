@@ -33,7 +33,6 @@
 (auto-compile-on-load-mode)
 (auto-compile-on-save-mode)
 
-
 ;;; Set emacs init file
 (defconst *emacs-init-file*
   (locate-user-emacs-file "init.el"))

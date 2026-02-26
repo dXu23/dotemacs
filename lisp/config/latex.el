@@ -1,4 +1,4 @@
-(require 'auctex)
+;;; (require 'auctex)
 (require 'preview-latex)
 
 (setopt TeX-auto-save t
