@@ -6,6 +6,31 @@ code is loaded when Emacs starts, and JIT elisp code only loads when
 a file corresponding to a respective mode is opened. The purpose of this
 is to reduce load time in Emacs as much as possible.
 
+** Quality of Life
+*** Separation Between Installing Packages and Running
+When the following command is run,
+
+#+begin_src
+  git clone --recurse-submodules <repo-url> ~/.config/emacs
+#+end_src
+
+the Emacs repo will be successfully cloned to that location. When
+starting up Emacs, either as a process or service, packages should not
+start downloading; they should have already been downloaded as a
+submodule when git clone was run.
+
+**** Rationale
+Any repo where a user has to wait a couple of minutes to load packages
+from Melpa or another Emacs package repository is just not up to my
+taste personally. When a user downloads a JavaScript project, they
+cannot just run ~npm run~; they must run ~npm install~ and then ~npm
+run~. I would
+
+***
+
+** General
+When the keybinding "C-x g" is pressed, Magit should be invoked.
+
 ** Productivity
 Projects are composed of ToDos.
 

@@ -37,6 +37,23 @@
 (defconst *emacs-init-file*
   (locate-user-emacs-file "init.el"))
 
+;;; Set path-local-dir for caching things
+(defconst *path-local-dir*
+  (expand-file-name
+   "emacs"
+   (or (getenv "XDG_CACHE_HOME")
+       (concat (file-name-as-directory (getenv "HOME")) ".cache")))
+  "The root directory for local Emacs files.
+
+Use this as permanent storage for files that are safe to share
+across systems.")
+
+(customize-set-variable 'custom-file (expand-file-name "custom.el" *path-local-dir*))
+
+(if (file-exists-p custom-file)
+    (load custom-file))
+
+
 ;;; Visit config file
 (defun config-visit ()
   "Visits config file, specified by *emacs-init-file*."
@@ -107,9 +124,6 @@
                     user-emacs-directory)))
   (add-to-list 'load-path (expand-file-name "lisp" emacs-home)))
 
-;; Tab bar mode
-(tab-bar-mode 1)
-
 ;;; ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
@@ -175,11 +189,6 @@
 (customize-set-variable 'display-raw-bytes-as-hex t)
 
 (customize-set-variable 'browse-url-generic-program "/usr/bin/firefox")
-
-(customize-set-variable 'custom-file (expand-file-name "custom.el" user-emacs-directory))
-
-(if (file-exists-p custom-file)
-    (load custom-file))
 
 (require 'core/auto)
 (require 'core/appearance)

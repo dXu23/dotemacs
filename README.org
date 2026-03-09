@@ -12,6 +12,7 @@ tools like Eask, Cask, or Eldev.
 Let us assume that we have the most overengineered complicated directory setup possible,
 and then simplify as needed. Say that we want to split our Emacs config into the
 following setup
+
 #+begin_export ascii
  - .config
   |- emacs
@@ -41,8 +42,8 @@ autoload statements.
           cd lisp && $(EMACS) -Q -batch -f loaddefs-generate-batch loaddefs.el init
 #+end_src
 
-Then, to make sure that the right init-lang.el file is loaded when lang file
-is opened, we use the following elisp snippet:
+Then, to make sure that the right init-lang.el file is loaded when a
+respective file is opened, we use the following elisp snippet:
 
 #+begin_src elisp
   (load "loaddefs.el" nil t)
@@ -63,9 +64,9 @@ goal:
   (require 'core-appearance)
 #+end_src
 
-Most people would agreee that this setup is too redundant. For example, the path
-"lisp/core/core-appearance" has core listed twice. So we might try the following
-instead:
+Most people would agree that this setup is somewhat redundant. For
+example, the path "lisp/core/core-appearance" has core listed
+twice. So we might try the following instead:
 
 #+begin_src
    - .config
@@ -113,12 +114,13 @@ Of course, appearance.el needs to have the following provide statement:
 This simultaneously simplifies the code needed to adjust the load-path, while also
 (for the most part) reducing the chances of a namespace conflict.
 
-The reason that I decided to not choose the flattened directory layout was due to the
-additionial core-*.el files that loaddefs-generate-batch would scan over. As many
-enthusiastic Emacs users might be able to tell, this Emacs config was heavily based
-on aboabo's Emacs config. When looking at his configuration, I was curious about how
-many files in his modes directory did NOT contain autoloads. I used the grep command
-to determine this:
+The reason that I decided to not choose the flattened directory layout
+was due to the additionial core-*.el files that
+~loaddefs-generate-batch~ would scan over. As many enthusiastic Emacs
+users might be able to tell, this Emacs config was heavily based on
+aboabo's Emacs config. When looking at his configuration, I was
+curious about how many files in his modes directory did NOT contain
+autoloads. I used the grep command to determine this:
 
 #+begin_src sh
   grep -L "autoload" modes/*.el
@@ -168,6 +170,9 @@ from d12frosted's Task Management with Org Roam. It is not really possible to te
 whether it is part of the Vulpea library or not, but renaming it to "my/vulpea-project-p"
 makes things a lot clearer.
 
+Admittedly, I do not follow this function as much as I would like, but
+I will try to prefix personal functions with "my/" in the future.
+
 ** FAQ
 *** Why no use-package?
 Here is what use-package does:
@@ -177,11 +182,13 @@ Here is what use-package does:
 
 I personally feel like this is too much for my taste, as I believe that
 a function/macro should do one thing and do it well. So instead of use-package,
-I just use plain old require.
+I just use plain old require along with Borg to manage packages.
 
 *** Why multiple files instead of a single file?
 For most coding projects, it is recommended to create multiple files instead of a
 single file. An Emacs config is also a project. So why would you want to shove all
-of your Emacs config into one single Org Mode file or a single init.el? Not to mention
-that finding the cause of a bug seems like it would be harder with a single file,
-since one would have to bisect until the error is found.
+of your Emacs config into one single Org Mode file or a single init.el?
+
+Admittedly, some of the debugging benefits due to a multiple file
+setup are lost since Emacs frustratingly does not tell what line and
+what file an error occurs in.
