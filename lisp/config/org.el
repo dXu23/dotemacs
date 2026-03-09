@@ -1,9 +1,10 @@
+;; -*- lexical-binding: t; -*-
 (require 'org)
-(require 'org-bullets)
+(require 'org-modern)
 
-(require 'tex)
-(require 'latex)
-(require 'cdlatex)
+; (require 'tex)
+; (require 'latex)
+; (require 'cdlatex)
 
 (require 'xref)
 (require 'reftex-ref)
@@ -153,7 +154,7 @@
 
 ;;;###autoload
 (defun my/org-setup ()
-  (org-bullets-mode)
+  (org-modern-mode)
   (visual-line-mode)
   (prettify-symbols-mode)
   (turn-on-org-cdlatex)
@@ -180,76 +181,155 @@
 
 (customize-set-variable 'org-agenda-skip-deadline-if-done t)
 
-(setq org-format-latex-options '(:foreground default :background default :scale 1.8 :html-foreground
+(setq org-format-latex-options
+      '(:foreground default :background default :scale 1.8 :html-foreground
              "Black" :html-background "Transparent" :html-scale 1.0
              :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 ; Org Table Reference Functions
-;; (defun my/org-table-cell-at-point ()
-;;   "At point, return the cell object from an Org table.
-;;
-;; A cell object is defined to be a list containing the row and the column, successfully."
-;;   (if (not (org-at-table-p))
-;;       (error "Not in a table"))
-;;
-;;   (let* ((row (org-table-current-dline))
-;;          (col (org-table-current-column)))
-;;     (cons row col)))
-;;
-;; (defun my/format-org-table-field-reference (cell)
-;;   (pcase-let ('(row . col) cell))
-;;   (format "@%d$%d" row col))
-;;
-;; (defun my/org-table-range ()
-;;   "Return range object from a region defined within an Org table.
-;;
-;; A range object is a list of two cells computed via
-;; `my/org-table-cell-at-point', the first being the cell at the
-;; start of the region and the last being the cell at the end of the
-;; region."
-;;   (if (not (and (org-at-table-p)
-;;                 (use-region-p)))
-;;       (error "Not in an Org table"))
-;;
-;;   (save-excursion
-;;     (let* ((end (my/org-table-cell-at-point)))
-;;       (exchange-point-and-mark)
-;;       (let ((start (my/org-table-cell-at-point)))
-;;         (list start end)))))
-;;
-;; (defvar my/last-org-table-reference nil
-;;   "Last stored Org table reference.
-;;
-;; State variable to store an Org table reference (field or range)
-;; to be used in an Org table formula. This table is set via
-;; `my/org-table-reference-dwim'
-;;
-;; Note: This state variable to work-around lack of clarity on
-;; region and mouse menu insertion.")
-;;
-;; (defun my/org-table-reference-dwim ()
-;;   (if (not (org-at-table-p))
-;;       (error "Not in an Org table"))
-;;   (cond
-;;    ((use-region-p)
-;;     (pcase-let* ((range (my/org-table-range))
-;;                  (`(start . end) range)
-;;                  (msg (format "%s..%s"
-;;                               (my/format-org-table-field-reference start)
-;;                               (my/format-org-table-field-reference end))))
-;;       (setq my/last-org-table-reference (my/org-table-range-to-reference range))
-;;       msg))
-;;    (t
-;;     (let ((msg (my/format-org-table-field-reference
-;;                 (my/org-table-cell-at-point))))
-;;       (setq my/last-org-table-reference msg)
-;;       msg))))
+(defun my/org-table-cell-at-point ()
+  "At point, return the cell object from an Org table.
+
+A cell object is defined to be a list containing the row and the column, successfully."
+  (if (not (org-at-table-p))
+      (error "Not in a table"))
+  (let* ((row (org-table-current-dline))
+         (col (org-table-current-column)))
+    (cons row col)))
+
+(defun my/format-org-table-field-reference (cell)
+  (pcase-let ((`(row . col) cell))
+    (format "@%d$%d" row col)))
+
+(defun my/org-table-range ()
+  "Return range object from a region defined within an Org table.
+
+A range object is a list of two cells computed via
+`my/org-table-cell-at-point', the first being the cell at the
+start of the region and the last being the cell at the end of the
+region."
+  (if (not (and (org-at-table-p)
+                (use-region-p)))
+      (error "Not in an Org table"))
+  (save-excursion
+    (let* ((end (my/org-table-cell-at-point)))
+      (exchange-point-and-mark)
+      (let ((start (my/org-table-cell-at-point)))
+        (cons start end)))))
+
+(defvar my/last-org-table-reference nil
+  "Last stored Org table reference.
+
+State variable to store an Org table reference (field or range)
+to be used in an Org table formula. This table is set via
+`my/org-table-reference-dwim'
+
+Note: This state variable to work-around lack of clarity on
+region and mouse menu insertion.")
+
+(defun my/org-table-reference-dwim ()
+  (if (not (org-at-table-p))
+      (error "Not in an Org table"))
+  (cond
+   ((use-region-p)
+    (pcase-let* ((range (my/org-table-range))
+                 (`(start . end) range)
+                 (msg (format "%s..%s"
+                              (my/format-org-table-field-reference start)
+                              (my/format-org-table-field-reference end))))
+      (setq my/last-org-table-reference (my/org-table-range-to-reference range))
+      msg))
+   (t
+    (let ((msg (my/format-org-table-field-reference
+                (my/org-table-cell-at-point))))
+      (setq my/last-org-table-reference msg)
+      msg))))
+
+(defun my/copy-org-table-reference-dwim ()
+  "Copy Org table reference (field or range) into kill ring.
+
+Given a point or region defined in an Org table, add to the
+`kill-ring' an Org table field or range reference.
+
+If the region is defined over multiple columns, thhen a Calc
+vector matrix is returned. See Info node `(org) Formula syntax
+for Calc' for more.
+
+If the buffer *Edit Formulas* is available (usually via
+`org-table-edit-formulas'), the reference will be inserted into
+it.
+
+See Info node `(org) references' for more on Org table field
+reference format."
+  (interactive)
+  (if (not (org-at-table-p))
+      (error "Not in an Org table"))
+  (let ((msg (my/org-table-reference-dwim))
+        (formulas-buffer (get-buffer "*Edit Formulas*")))
+    (if formulas-buffer
+        (with-current-buffer formulas-buffer
+          (insert my/last-org-table-reference)))
+    (message "Range: %s, Copied %s" msg my/last-org-table-reference)
+    (kill-new my/last-org-table-reference)))
+
+(defun my/org-table-range-to-reference (range)
+  "Convert RANGE object to Org table reference (field or range).
+
+If the region is defined over multiple columns, then a Calc
+vector matrix is returned. See Info node `(org) Formula syntax
+for Calc' for more.
+
+See `my/org-table-range' for more on RANGE object."
+  (pcase-let* ((`((a b) (c d)) range)
+               (r1 (min a c))
+               (c1 (min b d))
+               (r2 (max a c))
+               (c2 (max b d))
+               (rowrange (number-sequence r1 r2))
+               (buflist (list)))
+    (cond
+     ((and (= r1 r2) (= c1 c2))
+      (format "@%d$%d" r1 c1))
+     ((or (= c1 c2) (= r1 r2))
+      (format "@%d$%d..@%d$%d" r1 c1 r2 c2))
+     (t
+      (mapc (lambda (r)
+              (push (format "@%d$%d..@%d$%d" r c1 r c2) buflist))
+            rowrange)
+      (format "vec(%s)"
+              (string-join (reverse buflist) ", "))))))
+
+(defun my/context-menu-addon-items (menu click)
+  "Context menu hook function using MENU and CLICK event.
+
+MENU - menu to be configured.
+CLICK - event"
+  (save-excursion
+    (mouse-set-point click)
+    (my/context-menu-org-table-items menu (not (org-at-table-p)))
+    menu))
+
+(defun my/context-menu-org-table-items (menu &optional inapt)
+  "Menu items to populate MENU for Org table section if INAPT nil."
+  (when (not inapt)
+    (easy-menu-add-item menu nil
+                        [
+                         "Table Cell Info"
+                         my/mouse-copy-org-table-reference-dwim
+                         :label (my/org-table-reference-dwim)
+                         :help "Copy Org table references (field or range) into kill ring via mouse"
+                         ]
+                        )))
+
+(add-hook 'context-menu-functions #'my/context-menu-addon-items)
 
 ;;; Make Org mode work with windmove
 (add-hook 'org-shiftup-final-hook 'windmove-up)
 (add-hook 'org-shiftleft-final-hook 'windmove-left)
 (add-hook 'org-shiftdown-final-hook 'windmove-down)
 (add-hook 'org-shiftright-final-hook 'windmove-right)
+
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
 ;;;###autoload
 (defun my/org-agenda-setup ()

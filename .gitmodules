@@ -261,9 +261,6 @@
 [submodule "orderless"]
         path = lib/orderless
         url = https://github.com/oantolin/orderless
-[submodule "org-bullets"]
-        path = lib/org-bullets
-        url = https://github.com/integral-dw/org-bullets
 [submodule "org-chef"]
         path = lib/org-chef
         url = https://github.com/Chobbes/org-chef

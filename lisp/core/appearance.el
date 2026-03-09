@@ -14,6 +14,9 @@
 (if (fboundp 'scroll-bar-mode)
     (scroll-bar-mode -1))
 
+;; With the exception of tab bar, of course.
+(tab-bar-mode 1)
+
 ;;; load modus theme
 (setopt modus-themes-mode-line '(accented borderless padded)
         modus-themes-bold-constructs t

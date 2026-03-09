@@ -6,10 +6,43 @@
 ;;; Commentary:
 
 ;; This file will be copied to ldefs-boot.el and checked in
-;; periodically.
+;; periodically.  Note: When checking in ldefs-boot.el, don't include
+;; changes to any other files in the commit.
 
 ;;; Code:
 
+
+
+;;; Generated autoloads from config/c.el
+
+(autoload 'my/c-setup "config/c"
+"Sets up Treesitter for C.")
+
+
+;;; Generated autoloads from config/calc.el
+
+(autoload 'my/calc-setup "config/calc")
+
+
+;;; Generated autoloads from config/clojure.el
+
+(autoload 'my/clojure-setup "config/clojure")
+
+
+;;; Generated autoloads from config/common-lisp.el
+
+(autoload 'my/common-lisp-setup "config/common-lisp"
+"")
+
+
+;;; Generated autoloads from config/docker.el
+
+(autoload 'my/docker-setup "config/docker")
+
+
+;;; Generated autoloads from config/eshell.el
+
+(autoload 'my/eshell-setup "config/eshell")
 
 
 ;;; Generated autoloads from config/haskell.el
@@ -21,6 +54,18 @@
 
 (autoload 'my/java-setup "config/java")
 (register-definition-prefixes "config/java" '("my/get-"))
+
+
+;;; Generated autoloads from config/julia.el
+
+(autoload 'my/julia-setup "config/julia"
+"Sets up Julia")
+
+
+;;; Generated autoloads from config/latex.el
+
+(autoload 'my/latex-setup "config/latex")
+(register-definition-prefixes "config/latex" '("my/LaTeX-self-insert"))
 
 
 ;;; Generated autoloads from config/ocaml.el
@@ -35,9 +80,9 @@
 (register-definition-prefixes "config/org" '("my/"))
 
 
-;;; Generated autoloads from config/scheme.el
+;;; Generated autoloads from config/perl.el
 
-(autoload 'my/scheme-setup "config/scheme")
+(autoload 'my/perl-setup "config/perl")
 
 
 ;;; Generated autoloads from config/python.el
@@ -46,69 +91,9 @@
 (register-definition-prefixes "config/python" '("move-to-next-container" "python-compile-command"))
 
 
-;;; Generated autoloads from config/rust.el
-
-(autoload 'my/rust-setup "config/rust")
-(register-definition-prefixes "config/rust" '("my/rustic-mode-hook"))
-
-
-;;; Generated autoloads from config/common-lisp.el
-
-(autoload 'my/common-lisp-setup "config/common-lisp" "\
-")
-
-
 ;;; Generated autoloads from config/racket.el
 
 (autoload 'my/racket-setup "config/racket")
-
-
-;;; Generated autoloads from config/clojure.el
-
-(autoload 'my/clojure-setup "config/clojure")
-
-
-;;; Generated autoloads from config/typescript.el
-
-(autoload 'my/typescript-setup "config/typescript")
-
-
-;;; Generated autoloads from config/docker.el
-
-(autoload 'my/docker-setup "config/docker")
-
-
-;;; Generated autoloads from config/latex.el
-
-(autoload 'my/latex-setup "config/latex")
-(register-definition-prefixes "config/latex" '("my/LaTeX-self-insert"))
-
-
-;;; Generated autoloads from config/perl.el
-
-(autoload 'my/perl-setup "config/perl")
-
-
-;;; Generated autoloads from config/c.el
-
-(autoload 'my/c-setup "config/c" "\
-Sets up Treesitter for C.")
-
-
-;;; Generated autoloads from config/eshell.el
-
-(autoload 'my/eshell-setup "config/eshell")
-
-
-;;; Generated autoloads from config/julia.el
-
-(autoload 'my/julia-setup "config/julia" "\
-Sets up Julia")
-
-
-;;; Generated autoloads from config/calc.el
-
-(autoload 'my/calc-setup "config/calc")
 
 
 ;;; Generated autoloads from config/react.el
@@ -116,21 +101,20 @@ Sets up Julia")
 (autoload 'my/react-setup "config/react")
 
 
-;;; Generated autoloads from config/gud.el
+;;; Generated autoloads from config/rust.el
 
-(autoload 'my/gud-setup "config/gud")
-(register-definition-prefixes "config/gud" '("gud-"))
-
-
-;;; Generated autoloads from config/go.el
-
-(autoload 'my/go-setup "config/go")
+(autoload 'my/rust-setup "config/rust")
+(register-definition-prefixes "config/rust" '("my/rustic-mode-hook"))
 
 
-;;; Generated autoloads from config/cpp.el
+;;; Generated autoloads from config/scheme.el
 
-(autoload 'my/cpp-setup "config/cpp" "\
-Sets up Treesitter for C++.")
+(autoload 'my/scheme-setup "config/scheme")
+
+
+;;; Generated autoloads from config/typescript.el
+
+(autoload 'my/typescript-setup "config/typescript")
 
 ;;; End of scraped data
 

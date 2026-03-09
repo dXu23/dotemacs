@@ -24,6 +24,7 @@
 (require 'org-noter)
 
 (require 'denote)
+(require 'consult-denote)
 (require 'denote-journal)
 (require 'elfeed)
 
