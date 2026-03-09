@@ -273,6 +273,9 @@
 [submodule "org-edna"]
         path = lib/org-edna
         url = git@github.com:emacsmirror/org-edna.git
+[submodule "org-modern"]
+        path = lib/org-modern
+        url = https://github.com/minad/org-modern
 [submodule "org-noter"]
         path = lib/org-noter
         url = https://github.com/org-noter/org-noter
